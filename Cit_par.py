@@ -62,24 +62,24 @@ KY2    = 1.25 * 1.114
 
 Cmac   = 0                      # Moment coefficient about the aerodynamic centre [ ]
 CNwa   = CLa                    # Wing normal force slope [ ]
-CNha   = 2 * pi * Ah / (Ah + 2) # Stabiliser normal force slope [ ]
+CNha   = 2 * math.pi * Ah / (Ah + 2) # Stabiliser normal force slope [ ]
 depsda = 4 / (A + 2)            # Downwash gradient [ ]
 
 # Lift and drag coefficient
 
 CL = 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
-CD = CD0 + (CLa * alpha0) ** 2 / (pi * A * e) # Drag coefficient [ ]
+CD = CD0 + (CLa * alpha0) ** 2 / (math.pi * A * e) # Drag coefficient [ ]
 
 # Stabiblity derivatives
 
-CX0    = W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
+CX0    = W * math.sin(th0) / (0.5 * rho * V0 ** 2 * S)
 CXu    = -0.02792
 CXa    = -0.47966
 CXadot = +0.08330
 CXq    = -0.28170
 CXde   = -0.03728
 
-CZ0    = -W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
+CZ0    = -W * math.cos(th0) / (0.5 * rho * V0 ** 2 * S)
 CZu    = -0.37616
 CZa    = -5.74340
 CZadot = -0.00350
