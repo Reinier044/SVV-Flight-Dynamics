@@ -1,3 +1,4 @@
+import math
 # Citation 550 - Linear simulation
 
 # xcg = 0.25 * c
@@ -34,18 +35,18 @@ bh     = 5.791	          # stabilser span [m]
 A      = b ** 2 / S      # wing aspect ratio [ ]
 Ah     = bh ** 2 / Sh    # stabilser aspect ratio [ ]
 Vh_V   = 1	          # [ ]
-ih     = -2 * pi / 180   # stabiliser angle of incidence [rad]
+ih     = -2 * math.pi / 180   # stabiliser angle of incidence [rad]
 
 # Constant values concerning atmosphere and gravity
 
-rho0   = 1.2250          # air density at sea level [kg/m^3] 
+rho0   = 1.2250          # air density at sea level [kg/m^3]
 lambda = -0.0065         # temperature gradient in ISA [K/m]
 Temp0  = 288.15          # temperature at sea level in ISA [K]
 R      = 287.05          # specific gas constant [m^2/sec^2K]
 g      = 9.81            # [m/sec^2] (gravity constant)
 
-# air density [kg/m^3]  
-rho    = rho0 * power( ((1+(lambda * hp0 / Temp0))), (-((g / (lambda*R)) + 1)))   
+# air density [kg/m^3]
+rho    = rho0 * power( ((1+(lambda * hp0 / Temp0))), (-((g / (lambda*R)) + 1)))
 W      = m * g            # [N]       (aircraft weight)
 
 # Constant values concerning aircraft inertia
@@ -90,7 +91,7 @@ Cmadot = +0.17800
 Cmq    = -8.79415
 
 CYb    = -0.7500
-CYbdot =  0     
+CYbdot =  0
 CYp    = -0.0304
 CYr    = +0.8495
 CYda   = -0.0400
@@ -103,7 +104,7 @@ Clda   = -0.23088
 Cldr   = +0.03440
 
 Cnb    =  +0.1348
-Cnbdot =   0     
+Cnbdot =   0
 Cnp    =  -0.0602
 Cnr    =  -0.2061
 Cnda   =  -0.0120
