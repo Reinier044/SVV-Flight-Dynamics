@@ -1,13 +1,5 @@
 import math
-
-h_0 = 0
-T_0 = 288  # temperature at sea level
-g = 9.81  # gravity constant
-gamma = 1.4  # air ratio of specific heats
-rho_0 = 1.225  # density at sea level
-p_0 = 101325  # pressure at sea level
-R = 287.05  # gas constant
-lmbda = - 0.0065  # gradient constant
+import Constants
 
 W = 60000  # total weight
 V_c = 128.09667  # measured calibrated air speed
@@ -41,13 +33,12 @@ def elevator_trim():
     return deflection_elev
 
 
-def eq_speed(h_p, T_m):
-    T_m = T_m + 273.15
-    p = p_0 * (lmbda * (h_p - h_0) / T_0 + 1) ** (-g / R / lmbda)  # static pressure
-    mach = (2 / (gamma - 1) * ((
-                                       1 + p_0 / p * ((1 + (gamma - 1) / (2 * gamma) * rho_0 / p_0 * V_c ** 2) **
-                                                      (gamma / (gamma - 1)) - 1)) ** ((gamma - 1) / gamma) - 1)) ** (
-                   1 / 2)
+def eq_speed(h_p, T_m,Constants):
+    p = Constants['p_oISA']*(1+ \
+                 ((Constants['lmbdaISA']*h_p)/Constants['T_0ISA']))\
+                 ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
+    
+    mach = (2 / (gamma - 1) * ((1 + p_0 / p * ((1 + (gamma - 1) / (2 * gamma) * rho_0 / p_0 * V_c ** 2) ** (gamma / (gamma - 1)) - 1)) ** ((gamma - 1) / gamma) - 1)) ** (1 / 2)
     print(mach)
     T = T_m / (1 + (gamma - 1) / 2 * mach ** 2)  # static air temperature
     sound_speed = (gamma * R * T) ** (1 / 2)  # speed ot sound
