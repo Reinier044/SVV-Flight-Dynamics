@@ -17,15 +17,19 @@ Call each variable using the following steps (example angle of attack:
 List of variable names to be called are in the bottom of this python file.
 '''
 # ==========Definitions===============
+
+
 def loadmat(filename):
     data = spio.loadmat(filename, struct_as_record=False, squeeze_me=True)
     return _check_keys(data)
+
 
 def _check_keys(dict):
     for key in dict:
         if isinstance(dict[key], spio.matlab.mio5_params.mat_struct):
             dict[key] = _todict(dict[key])
     return dict
+
 
 def _todict(matobj):
     dict = {}
@@ -36,6 +40,7 @@ def _todict(matobj):
         else:
             dict[strg] = elem
     return dict
+
 
 flightdata = loadmat('FTISxprt-20190307_124723.mat')
 
