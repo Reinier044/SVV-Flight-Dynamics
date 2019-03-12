@@ -1,8 +1,8 @@
 import math
-import Constants
+from Constantsdictionary import Constants
+
 
 W = 60000  # total weight
-V_c = 128.09667  # measured calibrated air speed
 W_s = 60500  # 'reduced'  weight
 m_dot_per_engine = 0.048  # standard fuel flow per engine kg/s
 
@@ -33,23 +33,23 @@ def elevator_trim():
     return deflection_elev
 
 
-def eq_speed(h_p, T_m,Constants):
-    p = Constants['p_oISA']*(1+ \
+def eq_speed(h_p,T_m,Constants,VIAS):
+    p = Constants['p_0ISA']*(1+ \
                  ((Constants['lmbdaISA']*h_p)/Constants['T_0ISA']))\
                  ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
     
-    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * V_c ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
+    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * VIAS ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
     print(mach)
     T = T_m / (1 + (Constants["gammaair"] - 1) / 2 * mach ** 2)  # static air temperature
     sound_speed = (Constants["gammaair"] * Constants["Rgas"] * T) ** (1 / 2)  # speed ot sound
-    rho = p / R / T  # air density
-    V_e = mach * sound_speed * (rho / rho_0) ** (1 / 2)
+    rho = p / Constants['Rgas'] / T  # air density
+    V_e = mach * sound_speed * (rho / Constants['rho_0ISA'])**(1 / 2)
 
     return V_e
 
 
 # print(eq_speed(1527.048,12.5))
-V_e = eq_speed(1527.048, 12.5)  # V_e for non_standrad mass
+#V_e = eq_speed(1527.048, 12.5)  # V_e for non_standrad mass
 
 
 def non_standard_mass(V_e):
