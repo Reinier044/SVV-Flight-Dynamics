@@ -1,5 +1,6 @@
 import math
-from Constantsdictionary import Constants
+from Constantsdictonary import Constants
+import numpy as np
 
 
 W = 60000  # total weight
@@ -32,6 +33,17 @@ def elevator_trim():
     deflection = 1
     return deflection_elev
 
+def Vcalibrated(Constants,VIAS,T1,rho1):
+    M_IAS = VIAS/np.sqrt(Constants['gammaair']*Constants['Rgas']*T1)
+    pdynamic = 0.5*rho1*VIAS**2
+    impactpres = pdynamic*(1+M_IAS**2/4+M_IAS**4/40+M_IAS**6/1600)
+    
+    print(M_IAS**2/4)
+    print(M_IAS**4/40)
+    print(M_IAS**6/1600)
+    
+    Vcal = Constants['SOS15']*np.sqrt(5*(((pdynamic/Constants['p_0ISA'])+1)**(2/7)-1))
+    return Vcal
 
 def eq_speed(h_p,T_m,Constants,VIAS):
     p = Constants['p_0ISA']*(1+ \
@@ -39,7 +51,7 @@ def eq_speed(h_p,T_m,Constants,VIAS):
                  ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
     
     mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * VIAS ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
-    print(mach)
+#    print(mach)
     T = T_m / (1 + (Constants["gammaair"] - 1) / 2 * mach ** 2)  # static air temperature
     sound_speed = (Constants["gammaair"] * Constants["Rgas"] * T) ** (1 / 2)  # speed ot sound
     rho = p / Constants['Rgas'] / T  # air density

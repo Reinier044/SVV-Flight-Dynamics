@@ -8,7 +8,12 @@ Constants = {'h_0':0,\
              'rho_0ISA':1.225,\
              'p_0ISA':101325,\
              'Rgas':287.05,\
-             'lmbdaISA':-0.0065}
+             'lmbdaISA':-0.0065,\
+             'Basicemptyweight':4157.17068,\
+             'Fuelref':1900*0.453592,\
+             'S':30,\
+             'SOS15':340.292286865}
+
 
 
 
