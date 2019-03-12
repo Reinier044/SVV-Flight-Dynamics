@@ -2,9 +2,18 @@ import scipy.io as spio
 '''
 By Jose
 
-To read flightdata.mat file to python follow step by step to call each dictionary
-
-
+To use:
+copy paste the following:
+    ============================================
+    import flightdata_reader
+    
+    flightdata = flightdata_reader.flightdata
+    ============================================
+This python file read the flightdata.mat file and convert it to python dictionary.
+Call each variable using the following steps (example angle of attack:
+    =============================================
+    AoA = flightdata['flightdata']['vane_AOA']['data']
+    =============================================
 '''
 # ==========Definitions===============
 def loadmat(filename):
@@ -40,12 +49,7 @@ def _todict(matobj):
             dict[strg] = elem
     return dict
 
-# ===========HOW TO CALL EACH DATA================
-'''
-first open the .mat file using loadmat
-call using the following sequences and it will give you an array of the data
-example below is for angle of attack
-'''
-data = loadmat('FTISxprt-20190307_124723.mat')
-AoA = data['flightdata']['vane_AOA']['data']
-print(AoA)
+flightdata = loadmat('FTISxprt-20190307_124723.mat')
+
+# AoA = flightdata['flightdata']['vane_AOA']['data']
+# print(AoA)
