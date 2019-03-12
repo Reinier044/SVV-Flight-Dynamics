@@ -38,10 +38,10 @@ def eq_speed(h_p, T_m,Constants):
                  ((Constants['lmbdaISA']*h_p)/Constants['T_0ISA']))\
                  ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
     
-    mach = (2 / (gamma - 1) * ((1 + p_0 / p * ((1 + (gamma - 1) / (2 * gamma) * rho_0 / p_0 * V_c ** 2) ** (gamma / (gamma - 1)) - 1)) ** ((gamma - 1) / gamma) - 1)) ** (1 / 2)
+    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * V_c ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
     print(mach)
-    T = T_m / (1 + (gamma - 1) / 2 * mach ** 2)  # static air temperature
-    sound_speed = (gamma * R * T) ** (1 / 2)  # speed ot sound
+    T = T_m / (1 + (Constants["gammaair"] - 1) / 2 * mach ** 2)  # static air temperature
+    sound_speed = (Constants["gammaair"] * Constants["Rgas"] * T) ** (1 / 2)  # speed ot sound
     rho = p / R / T  # air density
     V_e = mach * sound_speed * (rho / rho_0) ** (1 / 2)
 
