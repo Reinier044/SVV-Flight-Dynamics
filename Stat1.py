@@ -49,7 +49,7 @@ for i in range(len(IAS1)):
 Vtas1 = []
 for i in range(len(rho1)):
     rho = rho1[i]
-    Vtas =  eq_speed(h1[i],T1[i],Constants,IAS1[i]) * math.sqrt(Constants['rho_0ISA']/rho)
+    Vtas =  eq_speed(h1[i],T1[i],Constants,Vcal1[i]) * math.sqrt(Constants['rho_0ISA']/rho)
     Vtas1.append(Vtas)
 
 Weight = []
@@ -58,7 +58,7 @@ for i in range(len(Fused)):
 
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
-    Cl1.append((Weight[i]*Constants['g_0'])/(0.5*Constants['rho_0ISA']*Constants['S']*IAS1[i]**2))    
+    Cl1.append((Weight[i]*Constants['g_0'])/(0.5*Constants['rho_0ISA']*Constants['S']*Vcal1[i]**2))  #used calibrated now  
     
 #Cd0
     

@@ -42,15 +42,15 @@ def Vcalibrated(Constants,VIAS,T1,rho1):
     print(M_IAS**4/40)
     print(M_IAS**6/1600)
     
-    Vcal = Constants['SOS15']*np.sqrt(5*(((pdynamic/Constants['p_0ISA'])+1)**(2/7)-1))
+    Vcal = Constants['SOS15']*np.sqrt(5*(((impactpres/Constants['p_0ISA'])+1)**(2/7)-1))
     return Vcal
 
-def eq_speed(h_p,T_m,Constants,VIAS):
+def eq_speed(h_p,T_m,Constants,Vcal):
     p = Constants['p_0ISA']*(1+ \
                  ((Constants['lmbdaISA']*h_p)/Constants['T_0ISA']))\
                  ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
     
-    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * VIAS ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
+    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * Vcal ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
 #    print(mach)
     T = T_m / (1 + (Constants["gammaair"] - 1) / 2 * mach ** 2)  # static air temperature
     sound_speed = (Constants["gammaair"] * Constants["Rgas"] * T) ** (1 / 2)  # speed ot sound
