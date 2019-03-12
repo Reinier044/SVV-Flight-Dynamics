@@ -63,8 +63,8 @@ Content of the dictionary:
      lh_engine_turbine_N2: [1×1 struct]     Turbine Speed Left [%]
          rh_engine_fan_N1: [1×1 struct]     Fan Speed Right [%]
      rh_engine_turbine_N2: [1×1 struct]     Turbine Speed Right [%]
-             lh_engine_FU: [1×1 struct]     Calculated Fuel Mass Flow Left[lbs]
-             rh_engine_FU: [1×1 struct]     Calculated Fuel Mass Flow Right[lbs]
+             lh_engine_FU: [1×1 struct]     Calculated Fuel Used by Mass Flow Left[lbs]
+             rh_engine_FU: [1×1 struct]     Calculated Fuel Used by Mass Flow Right[lbs]
                   delta_a: [1×1 struct]     Deflection Aileron (da) [deg]
                   delta_e: [1×1 struct]     Deflection Elevator (de) [deg
                   delta_r: [1×1 struct]     Deflection Rudder [deg]
