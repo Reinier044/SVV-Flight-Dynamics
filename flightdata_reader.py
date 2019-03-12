@@ -10,7 +10,7 @@ copy paste the following:
     flightdata = flightdata_reader.flightdata
     ============================================
 This python file read the flightdata.mat file and convert it to python dictionary.
-Call each variable using the following steps (example angle of attack:
+Call each variable using the following steps (example angle of attack):
     =============================================
     AoA = flightdata['flightdata']['vane_AOA']['data']
     =============================================
