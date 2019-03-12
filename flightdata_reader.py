@@ -1,7 +1,5 @@
 import scipy.io as spio
 '''
-By Jose
-
 To use:
 copy paste the following:
     ============================================
