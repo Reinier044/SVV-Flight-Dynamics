@@ -5,7 +5,7 @@ import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-import pandas as pd
+
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -71,8 +71,6 @@ for i in range(len(Fused)):
 Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
-    
-<<<<<<< HEAD
 
 #Calculate Cd
 Cd = []
@@ -86,39 +84,40 @@ for i in range(len(Thrust)):
 
 
 
-#Regression
-   
+#Rewrite data into arrays   
 Cl2 = np.array(Cl2)
 Cl2 = Cl2.reshape(-1,1)
-print(Cl2)
 Cd = np.array(Cd)
 Cd = Cd.reshape(-1,1)
 
+#Use Regression model from sklearn
 lm = linear_model.LinearRegression()
 model = lm.fit(Cl2,Cd)
 
-predictions = lm.predict(Cl2)
+#Define slope of regression
 Slope = lm.coef_
-#oswald 
-  
+
+#oswald factor 
+e = float((1/Slope)/(np.pi*Constants['A']))
+
+#Zero lift drag
+Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
+
 #plots
 plt.figure()
-plt.plot(Cl2,predictions)
+
 plt.plot(Cl2,Cd)    
-=======
+
 #Calculation of the drag coefficient using the true airspeed and actual density
 Cd = []
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     
-#Cd0
 
-    
-#oswald 
   
 #plots
 plt.figure("CL")
 plt.plot(AoA1,Cl)  
 plt.figure("CD") 
 plt.plot(AoA1,Cd) 
->>>>>>> 2d550b5300cf7e8f44bef16ca42546f4eb8ea256
+
