@@ -5,6 +5,7 @@ import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 from sklearn import linear_model
+from decimal import Decimal
 
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
@@ -28,7 +29,7 @@ for i in np.arange(27,33):
 for i in np.arange(27,33):
     IAS1.append((sheet.cell_value(i,4)*0.514444))
 for i in np.arange(27,33):
-    AoA1.append((sheet.cell_value(i,5)))
+    AoA1.append((float(sheet.cell_value(i,5))))
 for i in np.arange(27,33):
     T1.append((float(sheet.cell_value(i,9))+273.15))
 for i in np.arange(27,33):
@@ -75,6 +76,7 @@ Cl = np.array(Cl).reshape(-1,1)
 
 #Calculate Cd
 Cd = []
+
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
 Cd = np.array(Cd).reshape(-1,1)
@@ -87,7 +89,7 @@ Cl2 = np.array(Cl2).reshape(-1,1)
 
 #Use Regression model from sklearn for CL2 over Cd plot
 lm = linear_model.LinearRegression()
-model = lm.fit(Cl2,Cd)
+lm.fit(Cl2,Cd)
 
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_
@@ -98,15 +100,32 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
-#Use Regression model from sklearn for Cl over alpha
-lm = linear_model.LinearRegression()
-model = lm.fit(Cl,Cd)
+#mach number range using Tactual and Vtas for the Cl-alpha curve
+T1 = np.array(T1).reshape(-1,1)
+Vtas1 = np.array(Vtas1).reshape(-1,1)
 
-   
-  
-#plots
-plt.figure("CL")
-plt.plot(AoA1,Cl)  
-plt.figure("CD") 
-plt.plot(AoA1,Cd) 
+M1 = Vtas1/(np.sqrt(Constants["gammaair"] * Constants["Rgas"] * T1))
+
+#reynolds number range for the Cl-alpha curve
+Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dynamicviscosityair"]
+
+#Use Regression model from sklearn for Cl over alpha and plotting the regression
+AoA1 = np.array(AoA1).reshape(-1,1)
+lm.fit(AoA1,Cl)
+
+
+
+plt.figure('Cl-alpha')
+plt.plot(AoA1,lm.predict(AoA1)) 
+plt.ylabel("Cl [-]")
+plt.xlabel("alpha [degrees]")
+plt.title("Cl-alpha for cruise configuration, \n Mach ["\
+        +str(round(float(M1[-1]),3))+"-"+str(round(float(M1[0]),3))+"],"\
+        +"\n Reynolds ["+str(float(Reynolds[-1]))+"-"+str(float(Reynolds[0]))+"]")
+    
+##plots
+#plt.figure("CL")
+#plt.plot(AoA1,Cl)  
+#plt.figure("CD") 
+#plt.plot(AoA1,Cd) 
 
