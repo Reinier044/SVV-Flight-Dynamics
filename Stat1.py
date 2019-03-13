@@ -87,7 +87,7 @@ Cl2 = np.array(Cl2).reshape(-1,1)
 
 #Use Regression model from sklearn for CL2 over Cd plot
 lm = linear_model.LinearRegression()
-model = lm.fit(Cl2,Cd)
+lm.fit(Cl2,Cd)
 
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_
@@ -98,16 +98,33 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
+
 #Redefine Cd as calculated with Cd0 and e
 CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 
 
+#Polynomial regression for Cl over Cd
+CdPoly = []
+for i in CdRev:
+    CdPoly.append(float(i[0]))
 
-  
+ClPoly = []
+for i in Cl:
+    ClPoly.append(float(i[0]))
+
+Coefficients = np.polyfit(ClPoly,CdPoly,2)
+
+ClTest = np.arange(0,0.81,0.01)
+
+CdTest = []
+for i in ClTest:
+    CdTest.append(((i**2)*Coefficients[0])+(i*Coefficients[1])+(Coefficients[2]))
+
 #plots
-plt.figure("CL")
-plt.plot(AoA1,Cl)  
+#plt.figure("CL")
+#plt.plot(AoA1,Cl)  
 plt.figure("CD") 
-plt.plot(AoA1,Cd)
-plt.plot(AoA1,CdRev) 
+plt.plot(ClTest,CdTest)
+plt.plot(Cl,CdRev)
+
 
