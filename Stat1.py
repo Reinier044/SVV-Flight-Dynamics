@@ -4,6 +4,8 @@ from appendix_b import eq_speed
 import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
+from sklearn import linear_model
+import pandas as pd
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -34,7 +36,7 @@ for i in np.arange(27,33):
 for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
     
-#Thrust data of the first stationary measurements
+#Thrust data of the first stationary measurements. Replace with actual values please
 TLeft = [3698.85,3009.89,2401.16,1856.19,1882.01,2192.1]
 TRight = [3803.04,3071.74,2527.55,2008.22,2062.5,2387.56]
 
@@ -72,21 +74,35 @@ Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     
-<<<<<<< HEAD
-
 
 #Calculate Cd
 Cd = []
-
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
-    
-#Cd0
-=======
->>>>>>> a3cc45ee8a6ac0778243286197ccedc718de6871
-    
+
+#Squared values of Cl
+Cl2 = []
+for i in range(len(Thrust)):
+    Cl2.append(Cl[i]**2)
+
+
+
+#Regression
+   
+Cl2 = np.array(Cl2)
+Cl2 = Cl2.reshape(-1,1)
+print(Cl2)
+Cd = np.array(Cd)
+Cd = Cd.reshape(-1,1)
+
+lm = linear_model.LinearRegression()
+model = lm.fit(Cl2,Cd)
+
+predictions = lm.predict(Cl2)
+Slope = lm.coef_
 #oswald 
   
 #plots
 plt.figure()
-plt.plot(AoA1,Cl)    
+plt.plot(Cl2,predictions)
+plt.plot(Cl2,Cd)    
