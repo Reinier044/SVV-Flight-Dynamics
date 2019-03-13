@@ -5,8 +5,12 @@ import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 from sklearn import linear_model
+<<<<<<< HEAD
 from decimal import Decimal
 
+=======
+from sklearn.preprocessing import PolynomialFeatures
+>>>>>>> ebcfe03f392826eaca87212ac4ba5279187aa986
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -100,6 +104,7 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
+<<<<<<< HEAD
 #mach number range using Tactual and Vtas for the Cl-alpha curve
 T1 = np.array(T1).reshape(-1,1)
 Vtas1 = np.array(Vtas1).reshape(-1,1)
@@ -128,4 +133,18 @@ plt.title("Cl-alpha for cruise configuration, \n Mach ["\
 #plt.plot(AoA1,Cl)  
 #plt.figure("CD") 
 #plt.plot(AoA1,Cd) 
+=======
+#Redefine Cd as calculated with Cd0 and e
+CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
+
+
+
+  
+#plots
+plt.figure("CL")
+plt.plot(AoA1,Cl)  
+plt.figure("CD") 
+plt.plot(AoA1,Cd)
+plt.plot(AoA1,CdRev) 
+>>>>>>> ebcfe03f392826eaca87212ac4ba5279187aa986
 
