@@ -45,13 +45,11 @@ for i in range(len(TLeft)):
 #calculation of the density at the measurement points
 rho1 = []
 for i in np.arange(len(T1)):
-    rhoact = Constants['rho_0ISA'] * ((T1[i]/Constants['T_0ISA'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
+    rhoact = Constants['rho_0ISA'] * ((T1[i]/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
     rho1.append(rhoact)
 
 #calculation of Caibrated airspeed using table from the assignment
 Vcal1 = []
-#for i in range(len(IAS1)):
-#    Vcal1.append(Vcalibrated(Constants,IAS1[i],T1[i],rho1[i]))
 for i in range(len(IAS1)):
     Vcal1.append(IAS1[i]-(2*0.514444))
 
@@ -67,26 +65,23 @@ Weight = []
 for i in range(len(Fused)):
     Weight.append(Constants['Basicemptyweight']+np.sum(Payload)+Constants['Fuelref']-Fused[i])
 
-#Calculation of the lift coeffient using true airspeed and actual density
+#Calculation of the lift coefficient using true airspeed and actual density
 Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     
-<<<<<<< HEAD
-
-
-#Calculate Cd
+#Calculation of the drag coefficient using the true airspeed and actual density
 Cd = []
-
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     
 #Cd0
-=======
->>>>>>> a3cc45ee8a6ac0778243286197ccedc718de6871
+
     
 #oswald 
   
 #plots
-plt.figure()
-plt.plot(AoA1,Cl)    
+plt.figure("CL")
+plt.plot(AoA1,Cl)  
+plt.figure("CD") 
+plt.plot(AoA1,Cd) 
