@@ -28,7 +28,7 @@ for i in np.arange(27,33):
 for i in np.arange(27,33):
     IAS1.append((sheet.cell_value(i,4)*0.514444))
 for i in np.arange(27,33):
-    AoA1.append((sheet.cell_value(i,5)))
+    AoA1.append((float(sheet.cell_value(i,5))))
 for i in np.arange(27,33):
     T1.append((float(sheet.cell_value(i,9))+273.15))
 for i in np.arange(27,33):
@@ -75,6 +75,7 @@ Cl = np.array(Cl).reshape(-1,1)
 
 #Calculate Cd
 Cd = []
+
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
 Cd = np.array(Cd).reshape(-1,1)
@@ -98,11 +99,19 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
+<<<<<<< HEAD
 
 #Redefine Cd as calculated with Cd0 and e
 CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
+=======
+#mach number range using Tactual and Vtas for the Cl-alpha curve
+T1 = np.array(T1).reshape(-1,1)
+Vtas1 = np.array(Vtas1).reshape(-1,1)
+>>>>>>> 73ea23e9351b21f1d9d071ba7bec0336a7ec34fe
 
+M1 = Vtas1/(np.sqrt(Constants["gammaair"] * Constants["Rgas"] * T1))
 
+<<<<<<< HEAD
 #Polynomial regression for Cl over Cd
 CdPoly = []
 for i in CdRev:
@@ -119,6 +128,25 @@ ClTest = np.arange(0,0.81,0.01)
 CdTest = []
 for i in ClTest:
     CdTest.append(((i**2)*Coefficients[0])+(i*Coefficients[1])+(Coefficients[2]))
+=======
+#reynolds number range for the Cl-alpha curve
+Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dynamicviscosityair"]
+
+#Use Regression model from sklearn for Cl over alpha and plotting the regression
+AoA1 = np.array(AoA1).reshape(-1,1)
+lm.fit(AoA1,Cl)
+
+plt.figure('Cl-alpha')
+plt.plot(AoA1,lm.predict(AoA1)) 
+plt.ylabel("Cl [-]")
+plt.xlabel("alpha [degrees]")
+plt.title("Cl-alpha for cruise configuration, \n Mach ["\
+        +str(round(float(M1[-1]),3))+"-"+str(round(float(M1[0]),3))+"],"\
+        +"\n Reynolds ["+str(float(Reynolds[-1]))+"-"+str(float(Reynolds[0]))+"]")
+    
+#Redefine Cd as calculated with Cd0 and e
+CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
+>>>>>>> 73ea23e9351b21f1d9d071ba7bec0336a7ec34fe
 
 #plots
 #plt.figure("CL")
@@ -126,5 +154,6 @@ for i in ClTest:
 plt.figure("CD") 
 plt.plot(ClTest,CdTest)
 plt.plot(Cl,CdRev)
+
 
 
