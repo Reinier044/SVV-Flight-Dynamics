@@ -1,6 +1,6 @@
 import xlrd 
 import numpy as np
-from appendix_b import eq_speed,Vcalibrated
+from appendix_b import eq_speed
 import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
@@ -38,32 +38,33 @@ for i in np.arange(len(T1)):
     rhoact = Constants['rho_0ISA'] * ((T1[i]/Constants['T_0ISA'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
     rho1.append(rhoact)
 
-#Cl and CD calculation
-Cl = []
-Cl1 = []
-
+#calculation of Caibrated airspeed using table from the assignment
 Vcal1 = []
+#for i in range(len(IAS1)):
+#    Vcal1.append(Vcalibrated(Constants,IAS1[i],T1[i],rho1[i]))
 for i in range(len(IAS1)):
-    Vcal1.append(Vcalibrated(Constants,IAS1[i],T1[i],rho1[i]))
+    Vcal1.append(IAS1[i]-(2*0.514444))
 
+#calculation of True airspeed using reduction of airspeed from assignment
 Vtas1 = []
 for i in range(len(rho1)):
     rho = rho1[i]
     Vtas =  eq_speed(h1[i],T1[i],Constants,Vcal1[i]) * math.sqrt(Constants['rho_0ISA']/rho)
     Vtas1.append(Vtas)
 
+#Calculating the weight at each measurement point using used fuel
 Weight = []
 for i in range(len(Fused)):
     Weight.append(Constants['Basicemptyweight']+np.sum(Payload)+Constants['Fuelref']-Fused[i])
 
+#Calculation of the lift coeffient using true airspeed and actual density
+Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
-    Cl1.append((Weight[i]*Constants['g_0'])/(0.5*Constants['rho_0ISA']*Constants['S']*Vcal1[i]**2))  #used calibrated now  
     
-#Cd0
     
 #oswald 
-    
+  
+#plots
 plt.figure()
 plt.plot(AoA1,Cl)    
-plt.plot(AoA1,Cl1) 
