@@ -5,7 +5,7 @@ import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 
-file_location = 'C:/Users/maxke/Dropbox/Lucht en Ruimtevaart/Third Year Courses/Simulation, Verification and Validation/Ref data/REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
