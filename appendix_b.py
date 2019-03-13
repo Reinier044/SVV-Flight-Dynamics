@@ -33,13 +33,6 @@ def elevator_trim():
     deflection = 1
     return deflection_elev
 
-#def Vcalibrated(Constants,VIAS,T1,rho1):
-#    M_IAS = VIAS/np.sqrt(Constants['gammaair']*Constants['Rgas']*T1)
-#    pdynamic = 0.5*rho1*VIAS**2
-#    impactpres = pdynamic*(1+M_IAS**2/4+M_IAS**4/40+M_IAS**6/1600)
-#    
-#    Vcal = Constants['SOS15']*np.sqrt(5*(((impactpres/Constants['p_0ISA'])+1)**(2/7)-1))
-#    return Vcal
 
 def eq_speed(h_p,T_m,Constants,Vcal):
     p = Constants['p_0ISA']*(1+ \
@@ -55,10 +48,8 @@ def eq_speed(h_p,T_m,Constants,Vcal):
 
     return V_e
 
-
 # print(eq_speed(1527.048,12.5))
 #V_e = eq_speed(1527.048, 12.5)  # V_e for non_standrad mass
-
 
 def non_standard_mass(V_e):
     # reduced speed due to non_standard mass
