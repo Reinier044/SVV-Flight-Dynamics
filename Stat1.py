@@ -5,7 +5,7 @@ import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-
+from sklearn.preprocessing import PolynomialFeatures
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -98,15 +98,16 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
-#Use Regression model from sklearn for Cl over alpha
-lm = linear_model.LinearRegression()
-model = lm.fit(Cl,Cd)
+#Redefine Cd as calculated with Cd0 and e
+CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 
-   
+
+
   
 #plots
 plt.figure("CL")
 plt.plot(AoA1,Cl)  
 plt.figure("CD") 
-plt.plot(AoA1,Cd) 
+plt.plot(AoA1,Cd)
+plt.plot(AoA1,CdRev) 
 
