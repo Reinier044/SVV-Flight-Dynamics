@@ -10,6 +10,9 @@ workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
 
+    
+
+Thrust = [] #[N]
 h1 = [] #[m]
 IAS1 = [] #[m/s]
 AoA1 = [] #[deg]
@@ -30,6 +33,13 @@ for i in np.arange(27,33):
     Fused.append((sheet.cell_value(i,8))*0.453592)
 for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
+    
+#Thrust data of the first stationary measurements
+TLeft = [3698.85,3009.89,2401.16,1856.19,1882.01,2192.1]
+TRight = [3803.04,3071.74,2527.55,2008.22,2062.5,2387.56]
+
+for i in range(len(TLeft)):
+    Thrust.append(TLeft[i]+TRight[i])
     
 
 #calculation of the density at the measurement points
@@ -59,6 +69,14 @@ for i in range(len(Fused)):
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     Cl1.append((Weight[i]*Constants['g_0'])/(0.5*Constants['rho_0ISA']*Constants['S']*Vcal1[i]**2))  #used calibrated now  
+    
+
+
+#Calculate Cd
+Cd = []
+
+for i in range(len(Thrust)):
+    Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
     
 #Cd0
     
