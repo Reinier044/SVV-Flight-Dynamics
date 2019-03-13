@@ -71,49 +71,38 @@ for i in range(len(Fused)):
 Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
+Cl = np.array(Cl).reshape(-1,1)
 
 #Calculate Cd
 Cd = []
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
+Cd = np.array(Cd).reshape(-1,1)
 
 #Squared values of Cl
 Cl2 = []
 for i in range(len(Thrust)):
     Cl2.append(Cl[i]**2)
+Cl2 = np.array(Cl2).reshape(-1,1)
 
-
-
-#Rewrite data into arrays   
-Cl2 = np.array(Cl2)
-Cl2 = Cl2.reshape(-1,1)
-Cd = np.array(Cd)
-Cd = Cd.reshape(-1,1)
-
-#Use Regression model from sklearn
+#Use Regression model from sklearn for CL2 over Cd plot
 lm = linear_model.LinearRegression()
 model = lm.fit(Cl2,Cd)
 
-#Define slope of regression
+#Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_
 
-#oswald factor 
+#oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
 
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
-#plots
-plt.figure()
+#Use Regression model from sklearn for Cl over alpha
+lm = linear_model.LinearRegression()
+model = lm.fit(Cl,Cd)
 
-plt.plot(Cl2,Cd)    
-
-#Calculation of the drag coefficient using the true airspeed and actual density
-Cd = []
-for i in range(len(Thrust)):
-    Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
-    
-
+   
   
 #plots
 plt.figure("CL")
