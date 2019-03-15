@@ -148,9 +148,21 @@ CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 #plt.figure("CL")
 #plt.plot(AoA1,Cl)  
 plt.figure("CD") 
-plt.plot(ClTest,CdTest)
+#plt.plot(ClTest,CdTest)
 plt.plot(Cl,CdRev)
-plt.plot(Cl,Cd)
+#plt.plot(AoA1,Cd)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
