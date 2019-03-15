@@ -99,11 +99,32 @@ e = float((1/Slope)/(np.pi*Constants['A']))
 #Zero lift drag
 Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
+#Redefine Cd as calculated with Cd0 and e
+CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
+
 #mach number range using Tactual and Vtas for the Cl-alpha curve
 T1 = np.array(T1).reshape(-1,1)
 Vtas1 = np.array(Vtas1).reshape(-1,1)
 
 M1 = Vtas1/(np.sqrt(Constants["gammaair"] * Constants["Rgas"] * T1))
+
+
+#Polynomial regression for Cl over Cd
+CdPoly = []
+for i in CdRev:
+    CdPoly.append(float(i[0]))
+
+ClPoly = []
+for i in Cl:
+    ClPoly.append(float(i[0]))
+
+Coefficients = np.polyfit(ClPoly,CdPoly,2)
+
+ClTest = np.arange(0,0.81,0.01)
+
+CdTest = []
+for i in ClTest:
+    CdTest.append(((i**2)*Coefficients[0])+(i*Coefficients[1])+(Coefficients[2]))
 
 #reynolds number range for the Cl-alpha curve
 Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dynamicviscosityair"]
@@ -125,9 +146,11 @@ CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 
 #plots
 plt.figure("CL")
-plt.plot(AoA1,Cl)  
+#plt.plot(AoA1,Cl)  
 plt.figure("CD") 
-plt.plot(AoA1,Cd)
-plt.plot(AoA1,CdRev) 
+plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
+plt.plot(Cl,CdRev, color="red") #Cd after linear regression
+plt.plot(Cl,Cd, color="green") #Experimental data
+
 
 
