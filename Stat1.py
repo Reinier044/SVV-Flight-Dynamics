@@ -145,12 +145,12 @@ plt.title("Cl-alpha for cruise configuration, \n Mach ["\
 CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 
 #plots
-#plt.figure("CL")
+plt.figure("CL")
 #plt.plot(AoA1,Cl)  
 plt.figure("CD") 
-plt.plot(ClTest,CdTest)
-plt.plot(Cl,CdRev)
-plt.plot(Cl,Cd)
+plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
+plt.plot(Cl,CdRev, color="red") #Cd after linear regression
+plt.plot(Cl,Cd, color="green") #Experimental data
 
 
 
