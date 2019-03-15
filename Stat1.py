@@ -140,7 +140,6 @@ Stat1Results["ClAlphaCoef"] = [a,b] #first one is a, second one is b with y = ax
 c = (((b**2)/(np.pi*Constants['A']*e))+Cd0)
 b = ((2*a*b)/(np.pi*Constants['A']*e))
 a = (((a**2)/(np.pi*Constants['A']*e)))
-Stat1Results["ClAlphaCoef"] = [a,b] #first one is a, second one is b with y = ax+ b
 Stat1Results["CdAlphaCoef"] = [a,b,c] 
 #,((2*(*(lm.coef_)[0][0])*((np.sqrt(lm.predict(np.array([0]).reshape(-1,1)))[0][0])))/(np.pi*Constants['A']*e)),((((lm.predict(np.array([0]).reshape(-1,1)))[0][0])/(np.pi*Constants['A']*e))+Cd0)]
 
