@@ -11,8 +11,7 @@ file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
-
-    
+Stat1Results = {}
 
 Thrust = [] #[N]
 h1 = [] #[m]
@@ -73,6 +72,7 @@ for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
 Cl = np.array(Cl).reshape(-1,1)
 
+
 #Calculate Cd
 Cd = []
 
@@ -118,13 +118,13 @@ ClPoly = []
 for i in Cl:
     ClPoly.append(float(i[0]))
 
-Coefficients = np.polyfit(ClPoly,CdPoly,2)
+PolyCoefficients = np.polyfit(ClPoly,CdPoly,2)
 
 ClTest = np.arange(0,0.81,0.01)
 
 CdTest = []
 for i in ClTest:
-    CdTest.append(((i**2)*Coefficients[0])+(i*Coefficients[1])+(Coefficients[2]))
+    CdTest.append(((i**2)*PolyCoefficients[0])+(i*PolyCoefficients[1])+(PolyCoefficients[2]))
 
 #reynolds number range for the Cl-alpha curve
 Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dynamicviscosityair"]
@@ -133,8 +133,24 @@ Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dyna
 AoA1 = np.array(AoA1).reshape(-1,1)
 lm.fit(AoA1,Cl)
 
+#Add regression coefficients of Cl-alpha curve to the dictionary
+a = (lm.coef_)[0][0]
+b = (lm.predict(np.array([0]).reshape(-1,1)))[0][0]
+Stat1Results["ClAlphaCoef"] = [a,b] #first one is a, second one is b with y = ax+ b
+c = (((b**2)/(np.pi*Constants['A']*e))+Cd0)
+b = ((2*a*b)/(np.pi*Constants['A']*e))
+a = (((a**2)/(np.pi*Constants['A']*e)))
+Stat1Results["CdAlphaCoef"] = [a,b,c] 
+#,((2*(*(lm.coef_)[0][0])*((np.sqrt(lm.predict(np.array([0]).reshape(-1,1)))[0][0])))/(np.pi*Constants['A']*e)),((((lm.predict(np.array([0]).reshape(-1,1)))[0][0])/(np.pi*Constants['A']*e))+Cd0)]
+
+AoA = np.arange(0,10,0.1).reshape(-1,1)
+
+Cda = ((AoA**2)*a)+(AoA*b)+c
+
+
 plt.figure('Cl-alpha')
-plt.plot(AoA1,lm.predict(AoA1)) 
+plt.plot(AoA1,lm.predict(AoA1))
+#plt.plot(AoA,Cda) 
 plt.ylabel("Cl [-]")
 plt.xlabel("alpha [degrees]")
 plt.title("Cl-alpha for cruise configuration, \n Mach ["\
@@ -148,9 +164,15 @@ CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
 plt.figure("CL")
 #plt.plot(AoA1,Cl)  
 plt.figure("CD") 
+#plt.plot(ClTest,CdTest)
+plt.plot(Cl,CdRev)
+#plt.plot(AoA1,Cd)
+
+
 plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
 plt.plot(Cl,CdRev, color="red") #Cd after linear regression
 plt.plot(Cl,Cd, color="green") #Experimental data
+
 
 
 
