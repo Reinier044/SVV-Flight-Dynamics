@@ -7,6 +7,7 @@ from Stat1 import Stat1Results
 from appendix_b import eq_speed
 from mass_estimation import CG_post,CG_pre
 from sklearn import linear_model
+
 from sklearn.preprocessing import PolynomialFeatures
 
 def selection_sort(x):
@@ -114,13 +115,31 @@ Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
 #Vetilde
 Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
 
+Vcal = IAS2-(2*0.514444) #m/s
+VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact) #m/s
+VTAS = VTAS.reshape(-1,1) #m/s
+
+
 #linear regression trim curve
 lm = linear_model.LinearRegression()
 lm.fit(Vetilde,eldefstar)
 
+#Thrustcoefficient Tc using total thrust
+Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
+
 
 Vetilde = selection_sort(Vetilde)
 Festar = selection_sort(Festar)
+
+#Thrustcoefficient Tcs using total standard thrust
+Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27])) #N
+Tps = Tps1engine*2 #N
+Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
+
+
+#deltaeq*
+eldefstarrad = eldefrad[0:7] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
+eldefstar = np.degrees(eldefstarrad) #degrees
 
 
 #polynomial regression for stick force
@@ -134,6 +153,17 @@ for i in Festar:
     FestarPoly.append(float(i[0]))
 
 
+#Festar
+Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
+
+#Vetilde
+Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
+
+#linear regression trim curve
+lm = linear_model.LinearRegression()
+lm.fit(Vetilde,eldefstar)
+
+
 PolyCoefficients = np.polyfit(FestarPoly,VetildePoly,2)
 
 plt.figure('trim curve')
@@ -143,7 +173,9 @@ plt.gca().invert_yaxis()
 
 plt.figure('Stick force curve')
 plt.plot(Vetilde,Festar,'ro')
+
 plt.plot(VetildePoly,FestarPoly)
+
 plt.gca().invert_yaxis()
 
 

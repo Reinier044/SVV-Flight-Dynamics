@@ -1,16 +1,19 @@
 import math
 from Flight_data import *
+from Stat2 import Cmdelta,Payload
+from Stat1 import Clalpha,e,Cd0
+from Constantsdictonary import Constants
 
 # Citation 550 - Linear simulation
 
 # aerodynamic properties
-e      = 0.8            # Oswald factor [ ]
-CD0    = 0.04            # Zero lift drag coefficient [ ]
-CLa    = 5.084            # Slope of CL-alpha curve [per radian]
+e      =  e           # Oswald factor [ ]
+CD0    =  Cd0           # Zero lift drag coefficient [ ]
+CLa    =  Clalpha[0][0]           # Slope of CL-alpha curve [per radian]
 
 # Longitudinal stability
 Cma    =   1          # longitudinal stabilty [ ]
-Cmde   =   1          # elevator effectiveness [ ]
+Cmde   =   Cmdelta[0][0]         # elevator effectiveness [ ]
 
 #______________________________________________________________________________
 #------------------------------------------------------------------------------
@@ -32,7 +35,8 @@ AoA0 =  AoA[((st[situation]-9)*10)]        # angle of attack in the stationary f
 th0    =  pitchA[((st[situation]-9)*10)]     # pitch angle in the stationary flight condition [rad]
 
 # Aircraft mass
-m      =   1             # mass [kg]
+Fburn = (F_used_L[((st[situation]-9)*10)] + F_used_R[((st[situation]-9)*10)])*0.45359237
+m     = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburn             # mass [kg]
 
 # Aircraft geometry
 
