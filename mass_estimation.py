@@ -16,7 +16,7 @@ file_location = 'loading.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet1 = workbook.sheet_by_index(0)
 
-file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' 'Post_Flight_Datasheet_07_03_V3.xlsx'
+file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' 'Post_Flight_Datasheet_07_03_V3.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet2 = workbook.sheet_by_index(0)
 
