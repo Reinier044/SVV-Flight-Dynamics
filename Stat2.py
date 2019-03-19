@@ -7,14 +7,7 @@ from Stat1 import Stat1Results
 from appendix_b import eq_speed
 from mass_estimation import CG_post,CG_pre
 from sklearn import linear_model
-
 from sklearn.preprocessing import PolynomialFeatures
-
-def selection_sort(x):
-    for i in range(len(x)):
-        swap = i + np.argmin(x[i:])
-        (x[i], x[swap]) = (x[swap], x[i])
-    return x
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -127,19 +120,10 @@ lm.fit(Vetilde,eldefstar)
 #Thrustcoefficient Tc using total thrust
 Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
 
-
-Vetilde = selection_sort(Vetilde)
-Festar = selection_sort(Festar)
-
 #Thrustcoefficient Tcs using total standard thrust
 Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27])) #N
 Tps = Tps1engine*2 #N
 Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
-
-
-#deltaeq*
-eldefstarrad = eldefrad[0:7] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
-eldefstar = np.degrees(eldefstarrad) #degrees
 
 
 #polynomial regression for stick force
