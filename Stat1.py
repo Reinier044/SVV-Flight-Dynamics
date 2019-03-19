@@ -176,5 +176,3 @@ plt.plot(Cl,CdRev, color="red") #Cd after linear regression
 plt.plot(Cl,Cd, color="green") #Experimental data
 
 
-
-
