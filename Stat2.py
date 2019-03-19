@@ -9,7 +9,16 @@ from mass_estimation import CG_post,CG_pre
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
-file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+DataBook = input("Reference data or Flight data? type (R/F): ")
+
+if DataBook == "R":
+    file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    excelrange = np.hstack((np.arange(58,65),np.arange(74,76)))
+    
+else:
+    file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    excelrange = np.hstack((np.arange(58,63),np.arange(74,76)))
+
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
@@ -27,8 +36,6 @@ T = []
 Payload = []
 
 #7 measurements + cg shift measurements
-excelrange = np.hstack((np.arange(58,65),np.arange(74,76)))
-
 for i in excelrange:
     h.append((sheet.cell_value(i,3)*0.3048))
 h = np.array(h).reshape(-1,1)
