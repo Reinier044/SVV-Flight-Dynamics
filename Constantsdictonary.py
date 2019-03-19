@@ -17,8 +17,11 @@ Constants = {'h_0':0,\
              'MAC':2.0569,\
              'dynamicviscosityair':1.81*10**(-5),\
              'Dengine':0.6858,\
-             'Chord':2.056892}	
+             'Chord':2.056892,\
+             'CmTc':-0.0064,\
+             'Ws':60500} 
 
+#Ws IS IN NEWTON THE REST IN KG
 
 
 
