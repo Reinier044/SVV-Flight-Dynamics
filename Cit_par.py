@@ -1,17 +1,7 @@
 import math
+from Flight_data import *
+
 # Citation 550 - Linear simulation
-
-# xcg = 0.25 * c
-
-# Stationary flight condition
-
-hp0    =       	      # pressure altitude in the stationary flight condition [m]
-V0     =             # true airspeed in the stationary flight condition [m/sec]
-alpha0 =             # angle of attack in the stationary flight condition [rad]
-th0    =             # pitch angle in the stationary flight condition [rad]
-
-# Aircraft mass
-m      =             # mass [kg]
 
 # aerodynamic properties
 e      = 0.8            # Oswald factor [ ]
@@ -19,8 +9,30 @@ CD0    = 0.04            # Zero lift drag coefficient [ ]
 CLa    = 5.084            # Slope of CL-alpha curve [per radian]
 
 # Longitudinal stability
-Cma    =             # longitudinal stabilty [ ]
-Cmde   =             # elevator effectiveness [ ]
+Cma    =   1          # longitudinal stabilty [ ]
+Cmde   =   1          # elevator effectiveness [ ]
+
+#______________________________________________________________________________
+#------------------------------------------------------------------------------
+#              THE SAME CONSTANT VALUES FOR ANALYTICAL AND NUMERICAL
+#------------------------------------------------------------------------------
+#______________________________________________________________________________
+
+
+# Stationary flight condition for all eigenvalues------------------------------
+
+#YOU NEED TO SAY WHICH SITUATION YOU ARE IN BY HAND!  <-- <-- <-- <--
+st = [st_ph,st_shp,st_dr,st_drd,st_ar,st_spi] #starting times eigenmotions
+situation = 5 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
+              #Aperiodic roll (4), Spiral (5)
+
+hp0    =  press_alt[((st[situation]-9)*10)]  # pressure altitude in the stationary flight condition [m]
+V0     =  Vtrue[((st[situation]-9)*10)]      # true airspeed in the stationary flight condition [m/sec]
+AoA0 =  AoA[((st[situation]-9)*10)]        # angle of attack in the stationary flight condition [rad]
+th0    =  pitchA[((st[situation]-9)*10)]     # pitch angle in the stationary flight condition [rad]
+
+# Aircraft mass
+m      =   1             # mass [kg]
 
 # Aircraft geometry
 
@@ -68,7 +80,7 @@ depsda = 4 / (A + 2)            # Downwash gradient [ ]
 # Lift and drag coefficient
 
 CL = 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
-CD = CD0 + (CLa * alpha0) ** 2 / (math.pi * A * e) # Drag coefficient [ ]
+CD = CD0 + (CLa * AoA0) ** 2 / (math.pi * A * e) # Drag coefficient [ ]
 
 # Stabiblity derivatives
 
