@@ -3,7 +3,9 @@ import numpy as np
 import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
-from Stat1 import Stat1Results
+from Stat1 import Stat1Results 
+from appendix_b import eq_speed
+from mass_estimation import CG_post,CG_pre
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -69,10 +71,45 @@ Cn = (Stat1Results['ClAlphaCoef'][0]*AoA+Stat1Results['ClAlphaCoef'][1])*np.cos(
     + (Stat1Results['CdAlphaCoef'][0]*AoA**2+ \
        Stat1Results['CdAlphaCoef'][1]*AoA+Stat1Results['CdAlphaCoef'][2]) * np.sin(AoArad)
     
-xcg = np.array(([7.149610014],[7.115209049]))
+xcg = np.array(([CG_pre],[CG_post]))
 Cmdeltaconstant = ((xcg[1]-xcg[0])/Constants['Chord']) * -(1/(eldefrad[-1]-eldefrad[-2]))
 Cmdelta = Cmdeltaconstant * Cn[-1]
 
+#Thrust 
+ThrustrefL = np.array(([1912.71],[1955.14],[1990.61],[2024.82],[2024.82],[1876.69],[1862.96]))
+ThrustrefR = np.array(([2087.71],[2132.88],[2161.77],[2208.58],[2048.16],[2050.41],[2023.09]))
+Thrustref = ThrustrefL+ThrustrefR
+
+#IAS to TAS and actual density calculation
+rhoact = Constants['rho_0ISA'] * ((T/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
+
+Vcal = IAS2-(2*0.514444)
+VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact)
+VTAS = VTAS.reshape(-1,1)
+
+
+#Thrustcoefficient Tc
+Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #uing thrust of 1 engine, avarage between the 2
+
+#Tcs 
+Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27]))
+Tps = Tps1engine*2
+Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+#calculating thrust coefficient 
+#Tc = (Stat1Results['Thrust'])/(0.5*Stat1Results['Rhoactual']*
 
 
 
