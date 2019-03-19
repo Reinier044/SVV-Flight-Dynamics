@@ -36,23 +36,31 @@ F_actual_pre = Fstart-F_used_pre #Actual fuel in tank before cg shift[kg]
 F_actual_post = Fstart-F_used_post #Actual fuel in tank after cg shift[kg]
 
 
+#Create array with Fuel masses [kg], given relation
+#Used to establish linear relation of cg shift per fuel qauntity 
 for i in np.arange(1,51):
     Fmass.append(sheet1.cell_value(i,0)*LbsToKg)
 Fmass = np.array(Fmass).reshape(-1,1)
 
+#Create array with moments caused by fuel [kg*m], given relation 
+#Used to establish linear relation of cg shift per fuel qauntity 
 for i in np.arange(1,51):
     Fmoment.append((sheet1.cell_value(i,1))*(InchToM*LbsToKg))
 Fmoment = np.array(Fmoment).reshape(-1,1)
 
+
+#Create array with passenger's weight [kg]
 for i in np.arange(7,16):
     Pmass.append((sheet2.cell_value(i,7)))
 Pmass.append(0)
 Pmass = np.array(Pmass).reshape(-1,1)
 
+#Create an array with the moments of all passengers (weight*arm) [kg*m], before cg shift
 for i in np.arange(1,11):
     Pmoment_pre.append((sheet1.cell_value(i,4)*Pmass[i-1][0]))
 Pmoment_pre = np.array(Pmoment_pre).reshape(-1,1)
 
+#Create an array with the moments of all passengers (weight*arm) [kg*m], after cg shift
 for i in np.arange(1,11):
     Pmoment_post.append((sheet1.cell_value(i,8)*Pmass[i-1][0]))
 Pmoment_post = np.array(Pmoment_post).reshape(-1,1)

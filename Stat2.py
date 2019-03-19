@@ -125,6 +125,15 @@ Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.5
 Tps = Tps1engine*2 #N
 Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
 
+#Festar
+Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
+
+#Vetilde
+Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
+
+#linear regression trim curve
+lm = linear_model.LinearRegression()
+lm.fit(Vetilde,eldefstar)
 
 #polynomial regression for stick force
 VetildePoly = []
@@ -136,19 +145,14 @@ FestarPoly = []
 for i in Festar:
     FestarPoly.append(float(i[0]))
 
+FestarRegressed = []
+    
+PolyCoef = np.polyfit(VetildePoly,FestarPoly,2)
+Vetilde_range = np.arange(55,100,0.01)
+for spd in Vetilde_range:
+    FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
+FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
 
-#Festar
-Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
-
-#Vetilde
-Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
-
-#linear regression trim curve
-lm = linear_model.LinearRegression()
-lm.fit(Vetilde,eldefstar)
-
-
-PolyCoefficients = np.polyfit(FestarPoly,VetildePoly,2)
 
 plt.figure('trim curve')
 plt.plot(Vetilde,eldefstar,'ro')
@@ -158,7 +162,7 @@ plt.gca().invert_yaxis()
 plt.figure('Stick force curve')
 plt.plot(Vetilde,Festar,'ro')
 
-plt.plot(VetildePoly,FestarPoly)
+plt.plot(Vetilde_range,FestarRegressed)
 
 plt.gca().invert_yaxis()
 
