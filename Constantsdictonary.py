@@ -15,7 +15,9 @@ Constants = {'h_0':0,\
              'SOS15':340.292286865,\
              'A': 8.43866403,\
              'MAC':2.0569,\
-             'dynamicviscosityair':1.81*10**(-5)}	        
+             'dynamicviscosityair':1.81*10**(-5),\
+             'Chord': 2.056892}	
+        
 
 
 

@@ -21,6 +21,8 @@ file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet2 = workbook.sheet_by_index(0)
 
+BEM_cg = 7.421372 #[m]
+
 Fmass = []      #Fuel mass in [kg]
 Fmoment = []    #Fuel moment in [kg*m]
 Pmass = []        #Pax mass in [kg]
@@ -48,13 +50,9 @@ Pmoment = np.array(Pmoment).reshape(-1,1)
 lm = linear_model.LinearRegression()
 lm.fit(Fmass,Fmoment)
 
-#Define slope of regression for CL2 over Cd plot
+#Define coefficient of fuel moment function
 a = (lm.coef_)[0][0]
 b = (lm.predict(np.array([0]).reshape(-1,1)))[0][0]
 
-y = Fmass*a + b
 
-plt.figure('mass')
-plt.plot(Fmass,lm.predict(Fmass))
-plt.plot(Fmass,y)
 
