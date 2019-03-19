@@ -48,4 +48,3 @@ yawrate = flightdata['flightdata']['Ahrs1_bYawRate']['data']
 rollrate = flightdata['flightdata']['Ahrs1_bRollRate']['data']
 rollA = flightdata['flightdata']['Ahrs1_Roll']['data']
 
-truehead = flightdata['flightdata']['Fms1_trueHeading']['data']

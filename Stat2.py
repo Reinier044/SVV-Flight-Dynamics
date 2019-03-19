@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from Stat1 import Stat1Results 
 from appendix_b import eq_speed
 from mass_estimation import CG_post,CG_pre
+from sklearn import linear_model
+
 
 file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
 workbook = xlrd.open_workbook(file_location)
@@ -63,7 +65,7 @@ Payload = np.array(Payload).reshape(-1,1)
 
 #Cg shift 2 measurements 
 
-Weight = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburned
+Weight = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburned #kg
 
 #Calculating Cn using the Cl-Cd data from stat1
 #Cn = Cl * cos(AoA) +Cd * sin(AoA)
@@ -71,48 +73,54 @@ Cn = (Stat1Results['ClAlphaCoef'][0]*AoA+Stat1Results['ClAlphaCoef'][1])*np.cos(
     + (Stat1Results['CdAlphaCoef'][0]*AoA**2+ \
        Stat1Results['CdAlphaCoef'][1]*AoA+Stat1Results['CdAlphaCoef'][2]) * np.sin(AoArad)
     
-xcg = np.array(([CG_pre],[CG_post]))
+xcg = np.array(([CG_pre],[CG_post])) #m
 Cmdeltaconstant = ((xcg[1]-xcg[0])/Constants['Chord']) * -(1/(eldefrad[-1]-eldefrad[-2]))
 Cmdelta = Cmdeltaconstant * Cn[-1]
 
 #Thrust 
-ThrustrefL = np.array(([1912.71],[1955.14],[1990.61],[2024.82],[2024.82],[1876.69],[1862.96]))
-ThrustrefR = np.array(([2087.71],[2132.88],[2161.77],[2208.58],[2048.16],[2050.41],[2023.09]))
-Thrustref = ThrustrefL+ThrustrefR
+ThrustrefL = np.array(([1912.71],[1955.14],[1990.61],[2024.82],[2024.82],[1876.69],[1862.96])) #N
+ThrustrefR = np.array(([2087.71],[2132.88],[2161.77],[2208.58],[2048.16],[2050.41],[2023.09])) #N
+Thrustref = ThrustrefL+ThrustrefR #N
 
 #IAS to TAS and actual density calculation
-rhoact = Constants['rho_0ISA'] * ((T/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
+rhoact = Constants['rho_0ISA'] * ((T/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1))) #kg/m^3
 
-Vcal = IAS2-(2*0.514444)
-VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact)
-VTAS = VTAS.reshape(-1,1)
-
-
-#Thrustcoefficient Tc
-Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #uing thrust of 1 engine, avarage between the 2
-
-#Tcs 
-Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27]))
-Tps = Tps1engine*2
-Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2)
+Vcal = IAS2-(2*0.514444) #m/s
+VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact) #m/s
+VTAS = VTAS.reshape(-1,1) #m/s
 
 
+#Thrustcoefficient Tc using total thrust
+Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
+
+#Thrustcoefficient Tcs using total standard thrust
+Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27])) #N
+Tps = Tps1engine*2 #N
+Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
+
+#deltaeq*
+eldefstarrad = eldefrad[0:7] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
+eldefstar = np.degrees(eldefstarrad) #degrees
+
+#Festar
+Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
+
+#Vetilde
+Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
+
+#linear regression trim curve
+lm = linear_model.LinearRegression()
+lm.fit(Vetilde,eldefstar)
 
 
+plt.figure('trim curve')
+plt.plot(Vetilde,eldefstar,'ro')
+plt.plot(Vetilde,lm.predict(Vetilde))
+plt.gca().invert_yaxis()
 
-
-
-
-
-
-
-
-
-#calculating thrust coefficient 
-#Tc = (Stat1Results['Thrust'])/(0.5*Stat1Results['Rhoactual']*
-
-
-
+plt.figure('Stick force curve')
+plt.plot(Vetilde,Festar,'ro')
+plt.gca().invert_yaxis()
 
 
 
