@@ -16,15 +16,9 @@ Constants = {'h_0':0,\
              'A': 8.43866403,\
              'MAC':2.0569,\
              'dynamicviscosityair':1.81*10**(-5),\
-<<<<<<< HEAD
-             'Chord':2.0569,\
-             'Dengine':0.6858}	        
-||||||| merged common ancestors
-             'Chord':2.0569}	        
-=======
-             'Chord': 2.056892}	
+             'Dengine':0.6858,\
+             'Chord':2.056892}	
 
->>>>>>> 2bcb8c850fe4ed117255444b145fde171b14fdaa
 
 
 
