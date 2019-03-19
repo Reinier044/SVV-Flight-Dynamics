@@ -16,8 +16,12 @@ Constants = {'h_0':0,\
              'A': 8.43866403,\
              'MAC':2.0569,\
              'dynamicviscosityair':1.81*10**(-5),\
+<<<<<<< HEAD
              'Chord': 2.056892}	
         
+=======
+             'Chord':2.0569}	        
+>>>>>>> d0b109d5aa05a0b8e50aaed2f9a560d525a631e3
 
 
 

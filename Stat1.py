@@ -168,9 +168,9 @@ plt.figure("CD")
 plt.plot(Cl,CdRev)
 #plt.plot(AoA1,Cd)
 
+
 plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
 plt.plot(Cl,CdRev, color="red") #Cd after linear regression
 plt.plot(Cl,Cd, color="green") #Experimental data
-
 
 
