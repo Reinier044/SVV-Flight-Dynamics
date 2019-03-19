@@ -133,7 +133,7 @@ Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dyna
 #Use Regression model from sklearn for Cl over alpha and plotting the regression
 AoA1 = np.array(AoA1).reshape(-1,1)
 lm.fit(AoA1,Cl)
-Cla = lm.coef_ *(180/np.pi)
+Clalpha = lm.coef_ *(180/np.pi)
 
 #Add regression coefficients of Cl-alpha curve to the dictionary
 a = (lm.coef_)[0][0]
