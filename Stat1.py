@@ -41,13 +41,14 @@ TRight = [3803.04,3071.74,2527.55,2008.22,2062.5,2387.56]
 
 for i in range(len(TLeft)):
     Thrust.append(TLeft[i]+TRight[i])
-    
+
 
 #calculation of the density at the measurement points
 rho1 = []
 for i in np.arange(len(T1)):
     rhoact = Constants['rho_0ISA'] * ((T1[i]/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
     rho1.append(rhoact)
+    
 
 #calculation of Caibrated airspeed using table from the assignment
 Vcal1 = []
@@ -91,7 +92,7 @@ lm = linear_model.LinearRegression()
 lm.fit(Cl2,Cd)
 
 #Define slope of regression for CL2 over Cd plot
-Slope = lm.coef_
+Slope = lm.coef_ 
 
 #oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
@@ -132,6 +133,7 @@ Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dyna
 #Use Regression model from sklearn for Cl over alpha and plotting the regression
 AoA1 = np.array(AoA1).reshape(-1,1)
 lm.fit(AoA1,Cl)
+Cla = lm.coef_ *(180/np.pi)
 
 #Add regression coefficients of Cl-alpha curve to the dictionary
 a = (lm.coef_)[0][0]
