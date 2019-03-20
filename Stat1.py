@@ -17,10 +17,12 @@ else:
     file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
     excelrange = np.arange(27,33)
 
+
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
 Stat1Results = {}
+Stat1Results["DataBook"] = DataBook 
 
 Thrust = [] #[N]
 h1 = [] #[m]

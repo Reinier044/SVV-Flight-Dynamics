@@ -9,7 +9,7 @@ from mass_estimation import CG_post,CG_pre
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
-DataBook = input("Reference data or Flight data? type (R/F): ")
+DataBook = Stat1Results["DataBook"]
 
 if DataBook == "R":
     file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
