@@ -10,6 +10,7 @@ from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
 DataBook = Stat1Results["DataBook"]
+ShowFigures = Stat1Results["ShowFigures"]
 
 if DataBook == "R":
     file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
@@ -152,18 +153,12 @@ Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']
 lm = linear_model.LinearRegression()
 lm.fit(Vetilde,eldefstar)
 
-plt.figure('trim curve')
-plt.plot(Vetilde,eldefstar,'ro')
-plt.plot(Vetilde,lm.predict(Vetilde))
-plt.gca().invert_yaxis()
+
 
 #linear regression trim curve versus AoA
 lm.fit(AoA[0:len(Thrustref)],eldefstar)
 
-plt.figure('trim curve AoA')
-plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
-plt.plot(AoA[0:len(Thrustref)],lm.predict(AoA[0:len(Thrustref)]))
-plt.gca().invert_yaxis()
+
 
 #Getting Cma from the elevator trim curve versus AoA
 Cma = lm.coef_ * -Cmdelta
@@ -186,12 +181,24 @@ for spd in Vetilde_range:
     FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
 FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
 
-plt.figure('Stick force curve')
-plt.plot(Vetilde,Festar,'ro')
 
-plt.plot(Vetilde_range,FestarRegressed)
+if ShowFigures == "Yes":
+    
+    plt.figure('trim curve AoA')
+    plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
+    plt.plot(AoA[0:len(Thrustref)],lm.predict(AoA[0:len(Thrustref)]))
+    plt.gca().invert_yaxis()
+    
+    plt.figure('trim curve')
+    plt.plot(Vetilde,eldefstar,'ro')
+    plt.plot(Vetilde,lm.predict(Vetilde))
+    plt.gca().invert_yaxis()
 
-plt.gca().invert_yaxis()
+    plt.figure('Stick force curve')
+    plt.plot(Vetilde,Festar,'ro')
+    plt.plot(Vetilde_range,FestarRegressed)
+    
+    plt.gca().invert_yaxis()
 
 
 

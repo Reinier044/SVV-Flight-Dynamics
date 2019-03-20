@@ -1,12 +1,20 @@
 import flightdata_reader
 import xlrd 
-
+from Stat1 import Stat1Results 
 
 #Importing flight data ________________________________________________________
 flightdata = flightdata_reader.flightdata
 
 #Importing excel data _________________________________________________________
-file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' 'Post_Flight_Datasheet_07_03_V3.xlsx'
+
+DataBook = Stat1Results["DataBook"]
+
+if DataBook == "R":
+    file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    
+else:
+    file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx'
+    
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 

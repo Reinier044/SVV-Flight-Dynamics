@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
+ShowFigures = 'NO'
+
 DataBook = input("Reference data or Flight data? type (R/F): ")
 
 if DataBook == "R":
@@ -23,6 +25,7 @@ sheet = workbook.sheet_by_index(0)
 
 Stat1Results = {}
 Stat1Results["DataBook"] = DataBook 
+Stat1Results["ShowFigures"] = ShowFigures
 
 Thrust = [] #[N]
 h1 = [] #[m]
@@ -108,8 +111,6 @@ lm.fit(Cl2,Cd)
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_ 
 
-plt.figure('Cl2,cd')
-plt.plot(Cl2,lm.predict(Cl2))
 
 #oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
@@ -166,30 +167,30 @@ AoA = np.arange(0,10,0.1).reshape(-1,1)
 
 Cda = ((AoA**2)*a)+(AoA*b)+c
 
+if ShowFigures == 'Yes':
+    plt.figure('Cl-alpha')
+    plt.plot(AoA1,lm.predict(AoA1))
+    #plt.plot(AoA,Cda) 
+    plt.ylabel("Cl [-]")
+    plt.xlabel("alpha [degrees]")
+    plt.title("Cl-alpha for cruise configuration, \n Mach ["\
+            +str(round(float(M1[-1]),3))+"-"+str(round(float(M1[0]),3))+"],"\
+            +"\n Reynolds ["+str(float(Reynolds[-1]))+"-"+str(float(Reynolds[0]))+"]")
 
-plt.figure('Cl-alpha')
-plt.plot(AoA1,lm.predict(AoA1))
-#plt.plot(AoA,Cda) 
-plt.ylabel("Cl [-]")
-plt.xlabel("alpha [degrees]")
-plt.title("Cl-alpha for cruise configuration, \n Mach ["\
-        +str(round(float(M1[-1]),3))+"-"+str(round(float(M1[0]),3))+"],"\
-        +"\n Reynolds ["+str(float(Reynolds[-1]))+"-"+str(float(Reynolds[0]))+"]")
     
-#Redefine Cd as calculated with Cd0 and e
-CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
-
-#plots
-plt.figure("CL")
-#plt.plot(AoA1,Cl)  
-plt.figure("CD") 
-#plt.plot(ClTest,CdTest)
-plt.plot(Cl,CdRev)
-#plt.plot(AoA1,Cd)
-
-
-plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
-plt.plot(Cl,CdRev, color="red") #Cd after linear regression
-plt.plot(Cl,Cd, color="green") #Experimental data
+    plt.figure('Cl2,cd')
+    plt.plot(Cl2,lm.predict(Cl2))
+    #plots
+    plt.figure("CL")
+    #plt.plot(AoA1,Cl)  
+    plt.figure("CD") 
+    #plt.plot(ClTest,CdTest)
+    plt.plot(Cl,CdRev)
+    #plt.plot(AoA1,Cd)
+    
+    
+    plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
+    plt.plot(Cl,CdRev, color="red") #Cd after linear regression
+    plt.plot(Cl,Cd, color="green") #Experimental data
 
 
