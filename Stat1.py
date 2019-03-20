@@ -106,6 +106,9 @@ lm.fit(Cl2,Cd)
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_ 
 
+plt.figure('Cl2,cd')
+plt.plot(Cl2,lm.predict(Cl2))
+
 #oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
 

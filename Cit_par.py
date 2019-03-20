@@ -1,8 +1,9 @@
 import math
 from Flight_data import *
-from Stat2 import Cmdelta,Payload
+from Stat2 import Cmdelta,Payload,Cma
 from Stat1 import Clalpha,e,Cd0
 from Constantsdictonary import Constants
+import numpy as np
 
 # Citation 550 - Linear simulation
 
@@ -12,7 +13,7 @@ CD0    =  Cd0           # Zero lift drag coefficient [ ]
 CLa    =  Clalpha[0][0]           # Slope of CL-alpha curve [per radian]
 
 # Longitudinal stability
-Cma    =   1          # longitudinal stabilty [ ]
+Cma    =   Cma[0][0]          # longitudinal stabilty [ ]
 Cmde   =   Cmdelta[0][0]         # elevator effectiveness [ ]
 
 #______________________________________________________________________________
