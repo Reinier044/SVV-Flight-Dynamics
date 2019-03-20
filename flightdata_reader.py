@@ -1,4 +1,5 @@
 import scipy.io as spio
+from Stat1 import Stat1Results 
 '''
 To use:
 copy paste the following:
@@ -40,7 +41,13 @@ def _todict(matobj):
     return dict
 
 
-flightdata = loadmat('FTISxprt-20190307_124723.mat')
+DataBook = Stat1Results["DataBook"]
+
+if DataBook == "R":
+    flightdata = loadmat('Refdata.mat')
+    
+else:
+    flightdata = loadmat('FTISxprt-20190307_124723.mat')
 
 # AoA = flightdata['flightdata']['vane_AOA']['data']
 # print(AoA)
