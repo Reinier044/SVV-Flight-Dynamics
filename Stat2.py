@@ -14,10 +14,12 @@ DataBook = input("Reference data or Flight data? type (R/F): ")
 if DataBook == "R":
     file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
     excelrange = np.hstack((np.arange(58,65),np.arange(74,76)))
+    excelrange2 = np.arange(58,65)
     
 else:
     file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
     excelrange = np.hstack((np.arange(58,63),np.arange(74,76)))
+    excelrange2 = np.arange(58,63)
 
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
@@ -34,6 +36,9 @@ Fe = []
 Fburned = []
 T = [] 
 Payload = []
+ThrustrefL = [] #N
+ThrustrefR = [] #N
+Tps1engine = []
 
 #7 measurements + cg shift measurements
 for i in excelrange:
@@ -66,12 +71,21 @@ Fburned = np.array(Fburned).reshape(-1,1)
 for i in excelrange:
     T.append(float(sheet.cell_value(i,12))+273.15)
 T = np.array(T).reshape(-1,1)
+for i in excelrange2:
+    ThrustrefL.append(float(sheet.cell_value(i,13)))
+ThrustrefL = np.array(ThrustrefL).reshape(-1,1)
+for i in excelrange2:
+    ThrustrefR.append(float(sheet.cell_value(i,14)))
+ThrustrefR = np.array(ThrustrefR).reshape(-1,1)
+for i in excelrange2:
+    Tps1engine.append(float(sheet.cell_value(i,15)))
+Tps1engine = np.array(Tps1engine).reshape(-1,1)
 for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
 Payload = np.array(Payload).reshape(-1,1)
 
-#Cg shift 2 measurements 
 
+#Cg shift 2 measurements 
 Weight = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburned #kg
 
 #Calculating Cn using the Cl-Cd data from stat1
@@ -85,8 +99,6 @@ Cmdeltaconstant = ((xcg[1]-xcg[0])/Constants['Chord']) * -(1/(eldefrad[-1]-eldef
 Cmdelta = Cmdeltaconstant * Cn[-1]
 
 #Thrust 
-ThrustrefL = np.array(([1912.71],[1955.14],[1990.61],[2024.82],[2024.82],[1876.69],[1862.96])) #N
-ThrustrefR = np.array(([2087.71],[2132.88],[2161.77],[2208.58],[2048.16],[2050.41],[2023.09])) #N
 Thrustref = ThrustrefL+ThrustrefR #N
 
 #IAS to TAS and actual density calculation
@@ -98,22 +110,21 @@ VTAS = VTAS.reshape(-1,1) #m/s
 
 
 #Thrustcoefficient Tc using total thrust
-Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
+Tc = (Thrustref)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
 
 #Thrustcoefficient Tcs using total standard thrust
-Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27])) #N
 Tps = Tps1engine*2 #N
-Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
+Tcs = (Tps)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) 
 
 #deltaeq*
-eldefstarrad = eldefrad[0:7] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
+eldefstarrad = eldefrad[0:len(Thrustref)] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
 eldefstar = np.degrees(eldefstarrad) #degrees
 
 #Festar
-Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
+Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0']))
 
 #Vetilde
-Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
+Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
 
 Vcal = IAS2-(2*0.514444) #m/s
 VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact) #m/s
@@ -125,18 +136,17 @@ lm = linear_model.LinearRegression()
 lm.fit(Vetilde,eldefstar)
 
 #Thrustcoefficient Tc using total thrust
-Tc = (Thrustref)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
+Tc = (Thrustref)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
 
 #Thrustcoefficient Tcs using total standard thrust
-Tps1engine = np.array(([1335.52],[1395.28],[1448.37],[1511.91],[1289.79],[1250.56],[1181.27])) #N
 Tps = Tps1engine*2 #N
-Tcs = (Tps)/(0.5*rhoact[0:7]*(VTAS[0:7]**2)*Constants['Dengine']**2) 
+Tcs = (Tps)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) 
 
 #Festar
-Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
+Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0']))
 
 #Vetilde
-Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
+Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
 
 #linear regression trim curve versus speed
 lm = linear_model.LinearRegression()
@@ -148,11 +158,11 @@ plt.plot(Vetilde,lm.predict(Vetilde))
 plt.gca().invert_yaxis()
 
 #linear regression trim curve versus AoA
-lm.fit(AoA[0:7],eldefstar)
+lm.fit(AoA[0:len(Thrustref)],eldefstar)
 
 plt.figure('trim curve AoA')
-plt.plot(AoA[0:7],eldefstar,'ro')
-plt.plot(AoA[0:7],lm.predict(AoA[0:7]))
+plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
+plt.plot(AoA[0:len(Thrustref)],lm.predict(AoA[0:len(Thrustref)]))
 plt.gca().invert_yaxis()
 
 #Getting Cma from the elevator trim curve versus AoA

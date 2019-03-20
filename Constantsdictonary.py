@@ -21,6 +21,7 @@ Constants = {'h_0':0,\
              'CmTc':-0.0064,\
              'Ws':60500} 
 
+
 #Ws IS IN NEWTON THE REST IN KG
 
 

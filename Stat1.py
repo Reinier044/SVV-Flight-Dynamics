@@ -29,6 +29,8 @@ AoA1 = [] #[deg]
 T1 = [] #[K]
 Fused = [] #[kg]
 Payload = [] #[kg]
+TLeft = [] #[N]
+TRight = [] #[N]
 
 #importing the PFD from the excel sheet for the first stationary meas.
 for i in excelrange:
@@ -42,12 +44,14 @@ for i in excelrange:
 for i in excelrange:
     Fused.append((sheet.cell_value(i,8))*0.453592)
 for i in excelrange:
+    TLeft.append((sheet.cell_value(i,10)))
+for i in excelrange:
+    TRight.append((sheet.cell_value(i,11)))
+for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
-    
-#Thrust data of the first stationary measurements. Replace with actual values please
-TLeft = [3698.85,3009.89,2401.16,1856.19,1882.01,2192.1]
-TRight = [3803.04,3071.74,2527.55,2008.22,2062.5,2387.56]
 
+    
+#Calculate total thrust [N]
 for i in range(len(TLeft)):
     Thrust.append(TLeft[i]+TRight[i])
 
@@ -85,7 +89,6 @@ Cl = np.array(Cl).reshape(-1,1)
 
 #Calculate Cd
 Cd = []
-
 for i in range(len(Thrust)):
     Cd.append(Thrust[i]/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
 Cd = np.array(Cd).reshape(-1,1)
