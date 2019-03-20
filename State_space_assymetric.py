@@ -49,7 +49,6 @@ t = np.arange(0,100,0.1)
 u = np.ones((len(t),2))
 sol = ml.lsim(Sys_a,U=u,T=t)
 
-
 plt.figure()
 plt.plot(sol[1],sol[0][:,0])
 plt.show
