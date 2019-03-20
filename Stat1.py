@@ -41,7 +41,7 @@ for i in excelrange:
     T1.append((float(sheet.cell_value(i,9))+273.15))
 for i in excelrange:
     Fused.append((sheet.cell_value(i,8))*0.453592)
-for i in excelrange:
+for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
     
 #Thrust data of the first stationary measurements. Replace with actual values please
@@ -102,6 +102,9 @@ lm.fit(Cl2,Cd)
 
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_ 
+
+plt.figure('Cl2,cd')
+plt.plot(Cl2,lm.predict(Cl2))
 
 #oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
