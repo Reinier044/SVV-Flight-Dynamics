@@ -2,6 +2,7 @@ import numpy as np
 from Cit_par import *
 import control.matlab as ml
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 
@@ -44,8 +45,10 @@ D_a = np.zeros((4,2))
 
 Sys_a = ml.ss(A_a,B_a,C_a,D_a)
 
-t = np.arange(0,10,0.1)
-sol = ml.step(Sys_a,t)
+t = np.arange(0,100,0.1)
+u = np.ones((len(t),2))
+sol = ml.lsim(Sys_a,U=u,T=t)
+
 
 plt.figure()
 plt.plot(sol[1],sol[0][:,0])
