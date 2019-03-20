@@ -6,6 +6,8 @@ from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
+from Stat1 import Stat1Results
+
 
 InchToM = 0.0254            #Inches to meters
 LbsToKg = 0.453592          #Pounds to kg
@@ -16,7 +18,14 @@ file_location = 'loading.xlsx'
 workbook = xlrd.open_workbook(file_location)
 sheet1 = workbook.sheet_by_index(0)
 
-file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx' 'Post_Flight_Datasheet_07_03_V3.xlsx'
+DataBook = Stat1Results["DataBook"]
+
+if DataBook == "R":
+    file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    
+else:
+    file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+
 workbook = xlrd.open_workbook(file_location)
 sheet2 = workbook.sheet_by_index(0)
 
