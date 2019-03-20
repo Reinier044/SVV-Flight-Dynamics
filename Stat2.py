@@ -138,9 +138,25 @@ Festar = Fe[0:7]*(Constants['Ws']/(Weight[0:7]*Constants['g_0']))
 #Vetilde
 Vetilde = eq_speed(h,T,Constants,Vcal)[0:7]*np.sqrt(Constants['Ws']/(Weight[0:7]*Constants['g_0'])) 
 
-#linear regression trim curve
+#linear regression trim curve versus speed
 lm = linear_model.LinearRegression()
 lm.fit(Vetilde,eldefstar)
+
+plt.figure('trim curve')
+plt.plot(Vetilde,eldefstar,'ro')
+plt.plot(Vetilde,lm.predict(Vetilde))
+plt.gca().invert_yaxis()
+
+#linear regression trim curve versus AoA
+lm.fit(AoA[0:7],eldefstar)
+
+plt.figure('trim curve AoA')
+plt.plot(AoA[0:7],eldefstar,'ro')
+plt.plot(AoA[0:7],lm.predict(AoA[0:7]))
+plt.gca().invert_yaxis()
+
+#Getting Cma from the elevator trim curve versus AoA
+Cma = lm.coef_ * -Cmdelta
 
 #polynomial regression for stick force
 VetildePoly = []
@@ -159,12 +175,6 @@ Vetilde_range = np.arange(55,100,0.01)
 for spd in Vetilde_range:
     FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
 FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
-
-
-plt.figure('trim curve')
-plt.plot(Vetilde,eldefstar,'ro')
-plt.plot(Vetilde,lm.predict(Vetilde))
-plt.gca().invert_yaxis()
 
 plt.figure('Stick force curve')
 plt.plot(Vetilde,Festar,'ro')
