@@ -2,6 +2,7 @@ import numpy as np
 from Cit_par import *
 import control.matlab as ml
 import matplotlib.pyplot as plt
+import Flight_data
 #Symmetric Flight ____________________________________________________________
 
 x_u = (V0*CXu)/(c*2*muc)
@@ -34,4 +35,19 @@ B_s = np.array([[x_delta_e],\
 
 C_s = np.identity(4)
 
-D_s = np.zeros(2)
+D_s = np.zeros((4,1))
+
+Sys_s = ml.ss(A_s,B_s,C_s,D_s)
+
+duration_shp = 8
+u = eldefflight[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]*(np.pi/180)
+t = time[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]
+
+sol = ml.lsim(Sys_s,U=u,T=t)
+
+
+plt.figure('response')
+plt.plot(sol[1],sol[0][:,2])
+plt.show
+
+eigval_a,eigvec_a = np.linalg.eig(A_s)

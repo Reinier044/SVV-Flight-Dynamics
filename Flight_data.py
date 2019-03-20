@@ -60,3 +60,5 @@ Vtrue = flightdata['flightdata']['Dadc1_tas']['data']
 truehead = flightdata['flightdata']['Fms1_trueHeading']['data']
 press_alt = flightdata['flightdata']['Dadc1_alt']['data']
 
+eldefflight = flightdata['flightdata']['delta_e']['data']
+
