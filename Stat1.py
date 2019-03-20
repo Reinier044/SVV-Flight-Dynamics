@@ -7,7 +7,16 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
-file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+DataBook = input("Reference data or Flight data? type (R/F): ")
+
+if DataBook == "R":
+    file_location = 'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    excelrange = np.hstack(np.arange(27,33))  
+    
+else:
+    file_location = 'Post_Flight_Datasheet_07_03_V3.xlsx' #'REFERENCE_Post_Flight_Datasheet_Flight.xlsx'
+    excelrange = np.arange(27,33)
+
 workbook = xlrd.open_workbook(file_location)
 sheet = workbook.sheet_by_index(0)
 
@@ -22,17 +31,17 @@ Fused = [] #[kg]
 Payload = [] #[kg]
 
 #importing the PFD from the excel sheet for the first stationary meas.
-for i in np.arange(27,33):
+for i in excelrange:
     h1.append((sheet.cell_value(i,3)*0.3048))
-for i in np.arange(27,33):
+for i in excelrange:
     IAS1.append((sheet.cell_value(i,4)*0.514444))
-for i in np.arange(27,33):
+for i in excelrange:
     AoA1.append((float(sheet.cell_value(i,5))))
-for i in np.arange(27,33):
+for i in excelrange:
     T1.append((float(sheet.cell_value(i,9))+273.15))
-for i in np.arange(27,33):
+for i in excelrange:
     Fused.append((sheet.cell_value(i,8))*0.453592)
-for i in np.arange(7,16):
+for i in excelrange:
     Payload.append(sheet.cell_value(i,7))
     
 #Thrust data of the first stationary measurements. Replace with actual values please
