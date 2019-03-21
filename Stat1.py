@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
-ShowFigures = 'NO'
+ShowFigures = 'Yes'
 
 DataBook = input("Reference data or Flight data? type (R/F): ")
 
