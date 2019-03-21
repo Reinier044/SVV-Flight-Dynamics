@@ -2,6 +2,11 @@ import flightdata_reader
 import xlrd 
 from Stat1 import Stat1Results 
 
+#Conversion 
+Feetmeter = 0.3048
+Knotsmeter = 0.514444
+Poundkg = 0.45359237
+
 #Importing flight data ________________________________________________________
 flightdata = flightdata_reader.flightdata
 
@@ -43,22 +48,20 @@ st_spi = int(timechange(sheet.cell_value(83,9))) #starting time spiral
 #Importing variables 
 time = flightdata['flightdata']['time']['data']
 
-Vtrue = flightdata['flightdata']['Dadc1_tas']['data']
+Vtrue = flightdata['flightdata']['Dadc1_tas']['data']*Knotsmeter
 AoA = flightdata['flightdata']['vane_AOA']['data']
 pitchA = flightdata['flightdata']['Ahrs1_Pitch']['data']
-press_alt = flightdata['flightdata']['Dadc1_alt']['data']
+press_alt = flightdata['flightdata']['Dadc1_alt']['data']*Feetmeter
 
-F_used_L = flightdata['flightdata']['lh_engine_FU']['data']
-F_used_R = flightdata['flightdata']['rh_engine_FU']['data']
+F_used_L = flightdata['flightdata']['lh_engine_FU']['data']*Poundkg
+F_used_R = flightdata['flightdata']['rh_engine_FU']['data']*Poundkg
 
 pitchrate = flightdata['flightdata']['Ahrs1_bPitchRate']['data']
 yawrate = flightdata['flightdata']['Ahrs1_bYawRate']['data']
 rollrate = flightdata['flightdata']['Ahrs1_bRollRate']['data']
 rollA = flightdata['flightdata']['Ahrs1_Roll']['data']
 
-Vtrue = flightdata['flightdata']['Dadc1_tas']['data']
 truehead = flightdata['flightdata']['Fms1_trueHeading']['data']
-press_alt = flightdata['flightdata']['Dadc1_alt']['data']
 
 eldefflight = flightdata['flightdata']['delta_e']['data']
 
