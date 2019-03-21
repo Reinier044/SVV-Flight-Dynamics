@@ -155,8 +155,8 @@ lm.fit(Vetilde,eldefstar)
 
 
 
-#linear regression trim curve versus AoA
-lm.fit(AoA[0:len(Thrustref)],eldefstar)
+#linear regression trim curve versus AoA 
+lm.fit(AoArad[0:len(Thrustref)],eldefstar*(np.pi/180))
 
 
 

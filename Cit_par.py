@@ -32,11 +32,11 @@ situation = 1 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
 
 hp0    =  press_alt[((st[situation]-9)*10)]  # pressure altitude in the stationary flight condition [m]
 V0     =  Vtrue[((st[situation]-9)*10)]      # true airspeed in the stationary flight condition [m/sec]
-AoA0 =  AoA[((st[situation]-9)*10)]        # angle of attack in the stationary flight condition [rad]
+AoA0 =  AoA[((st[situation]-9)*10)]        # angle of attack in the stationary flight condition [degree]
 th0    =  pitchA[((st[situation]-9)*10)]     # pitch angle in the stationary flight condition [rad]
 
 # Aircraft mass
-Fburn = (F_used_L[((st[situation]-9)*10)] + F_used_R[((st[situation]-9)*10)])*0.45359237
+Fburn = (F_used_L[((st[situation]-9)*10)] + F_used_R[((st[situation]-9)*10)]) #[kg]
 m     = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburn             # mass [kg]
 
 # Aircraft geometry
