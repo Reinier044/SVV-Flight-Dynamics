@@ -69,6 +69,11 @@ if situation ==0 or situation ==1:
     plt.plot(sol[1],pitchrate[st_interval:end_interval]*Radtodeg,label='data')
     plt.legend()
     plt.show
+    
+    plt.figure('Elevator defl')
+    plt.plot(sol[1],eldefflight[st_interval:end_interval]*Radtodeg-(eldefflight[st_interval:end_interval][0])*Radtodeg,label='data')
+    plt.legend()
+    plt.show
 else:
     print('Not Symmetric')
 eigval_s,eigvec_s = np.linalg.eig(A_s)

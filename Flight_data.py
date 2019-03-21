@@ -58,9 +58,9 @@ correction_spi = 20
 #Durations of the eigenmotions
 duration_ph = 200 
 duration_shp = 8 
-duration_dr = 30 
-duration_drd = 25
-duration_ar =30 
+duration_dr = 16 
+duration_drd = 16
+duration_ar =16 
 duration_spi = 310 
 
 #______________________________________________________________________________        <------

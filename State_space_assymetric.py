@@ -46,9 +46,32 @@ if situation ==0 or situation ==1:
     print('Not Asymmetric')
 
 else:
-    plt.figure('response')
+
+    plt.figure('response rolangle ')
+    plt.plot(sol_a[1],(sol_a[0][:,1]*Radtodeg+(rollA[st_interval:end_interval][0]*Radtodeg)),label='statespace')
+    plt.plot(sol_a[1],rollA[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('response rollrate')
     plt.plot(sol_a[1],(sol_a[0][:,2]*Radtodeg+(rollrate[st_interval:end_interval][0]*Radtodeg)),label='statespace')
     plt.plot(sol_a[1],rollrate[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('response yawrate')
+    plt.plot(sol_a[1],(sol_a[0][:,2]*Radtodeg+(yawrate[st_interval:end_interval][0]*Radtodeg)),label='statespace')
+    plt.plot(sol_a[1],yawrate[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('aileron defl')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])*Radtodeg-(adefflight[st_interval:end_interval][0])*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('rudder def')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])*Radtodeg-(rdefflight[st_interval:end_interval][0])*Radtodeg,label='data')
     plt.legend()
     plt.show
 
