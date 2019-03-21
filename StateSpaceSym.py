@@ -34,7 +34,7 @@ D_s = np.zeros((4,1))
 
 Sys_s = ml.ss(A_s,B_s,C_s,D_s)
 
-duration_shp = 50
+duration_shp = 20
 u = (eldefflight[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]*(np.pi/180))-(eldefflight[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)][0]*(np.pi/180))
 t = time[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]
 
@@ -43,8 +43,8 @@ sol = ml.lsim(Sys_s,U=u,T=t)
 
 
 plt.figure('response')
-plt.plot(sol[1],(sol[0][:,2]*(180/np.pi)))
-plt.plot(sol[1],pitchA[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)])
+plt.plot(sol[1],(sol[0][:,2]*(180/np.pi)+(pitchA[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)][0])*(180/np.pi)))
+plt.plot(sol[1],pitchA[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]*(180/np.pi))
 plt.show
 
 eigval_s,eigvec_s = np.linalg.eig(A_s)

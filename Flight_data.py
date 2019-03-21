@@ -1,11 +1,13 @@
 import flightdata_reader
 import xlrd 
 from Stat1 import Stat1Results 
+import numpy as np
 
 #Conversion 
 Feetmeter = 0.3048
 Knotsmeter = 0.514444
 Poundkg = 0.45359237
+Degtorad = (np.pi/180)
 
 #Importing flight data ________________________________________________________
 flightdata = flightdata_reader.flightdata
@@ -50,7 +52,7 @@ time = flightdata['flightdata']['time']['data']
 
 Vtrue = flightdata['flightdata']['Dadc1_tas']['data']*Knotsmeter
 AoA = flightdata['flightdata']['vane_AOA']['data']
-pitchA = flightdata['flightdata']['Ahrs1_Pitch']['data']
+pitchA = flightdata['flightdata']['Ahrs1_Pitch']['data']*Degtorad
 press_alt = flightdata['flightdata']['Dadc1_alt']['data']*Feetmeter
 
 F_used_L = flightdata['flightdata']['lh_engine_FU']['data']*Poundkg
