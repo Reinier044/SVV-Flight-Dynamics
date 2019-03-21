@@ -121,18 +121,18 @@ rollA_spi = rollA[t_int_spi_st:t_int_spi_end]
 #The angle of attack, pitch angle and rate and the true airspeed can be plotted
 
 
-#plt.plot(t_shp,AoA_shp,label="AoA")
-#plt.plot(t_shp,pitch_shp,label="Pitch angle")
-#plt.plot(t_shp,pitchrate_shp,label='Pitch Rate')
-##plt.plot(t_shp,Vtrue_shp,label="True Airspeed")
-#
-#plt.axvline(x=(st_shp+correction_shp),color='r')
-#plt.axhline(y=0,color='g')
-#
-#plt.title("Short-Period")
-#plt.legend()
-#
-#plt.show
+plt.plot(t_shp,AoA_shp,label="AoA")
+plt.plot(t_shp,pitch_shp,label="Pitch angle")
+plt.plot(t_shp,pitchrate_shp,label='Pitch Rate')
+#plt.plot(t_shp,Vtrue_shp,label="True Airspeed")
+
+plt.axvline(x=(st_shp+correction_shp),color='r')
+plt.axhline(y=0,color='g')
+
+plt.title("Short-Period")
+plt.legend()
+
+plt.show
 
 
 #------------------------------------------------------------------------------
@@ -177,20 +177,20 @@ rollA_spi = rollA[t_int_spi_st:t_int_spi_end]
 #------------------------------Plots Aperiodic role----------------------------
 #------------------------------------------------------------------------------
 
-plt.plot(t_ar,AoA_ar,label="AoA")
-plt.plot(t_ar,pitch_ar,label="Pitch angle")
-plt.plot(t_ar,pitchrate_ar,label='Pitch Rate')
-plt.plot(t_ar,rollrate_ar,label='Roll Rate')
-plt.plot(t_ar,rollA_ar,label='Roll angle')
-
-plt.axvline(x=(st_ar+correction_ar),color='r')
-plt.axhline(y=0,color='g')
-
-plt.title("Aperiodic Role")
-plt.legend()
-
-plt.show
-
+#plt.plot(t_ar,AoA_ar,label="AoA")
+#plt.plot(t_ar,pitch_ar,label="Pitch angle")
+#plt.plot(t_ar,pitchrate_ar,label='Pitch Rate')
+#plt.plot(t_ar,rollrate_ar,label='Roll Rate')
+#plt.plot(t_ar,rollA_ar,label='Roll angle')
+#
+#plt.axvline(x=(st_ar+correction_ar),color='r')
+#plt.axhline(y=0,color='g')
+#
+#plt.title("Aperiodic Role")
+#plt.legend()
+#
+#plt.show
+#
 
 #------------------------------------------------------------------------------
 #------------------------------Plots Spiral------------------------------------

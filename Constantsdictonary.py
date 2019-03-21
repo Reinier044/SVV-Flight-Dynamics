@@ -19,7 +19,8 @@ Constants = {'h_0':0,\
              'Dengine':0.6858,\
              'Chord':2.056892,\
              'CmTc':-0.0064,\
-             'Ws':60500} 
+             'Ws':60500,\
+             'Span':15.911} 
 
 
 #Ws IS IN NEWTON THE REST IN KG
