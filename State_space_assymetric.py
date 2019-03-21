@@ -29,15 +29,15 @@ A_a = np.dot(P_a_inv,Q_a)
 
 
 
-Sys_a = ml.ss(A_a,B_a,C_a,D_a)
-
-t = np.arange(0,100,0.1)
-u = np.ones((len(t),2))
-sol = ml.lsim(Sys_a,U=u,T=t)
-
-plt.figure()
-plt.plot(sol[1],sol[0][:,0])
-plt.show
+#Sys_a = ml.ss(A_a,B_a,C_a,D_a)
+#
+#t = np.arange(0,100,0.1)
+#u = np.ones((len(t),2))
+#sol = ml.lsim(Sys_a,U=u,T=t)
+#
+#plt.figure()
+#plt.plot(sol[1],sol[0][:,0])
+#plt.show
 
 
 eigval_a,eigvec_a = np.linalg.eig(A_a)
