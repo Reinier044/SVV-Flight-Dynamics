@@ -68,7 +68,7 @@ duration_spi = 310
 #                                SITUATION
 #------------------------------------------------------------------------------        <------
 #______________________________________________________________________________        <------
-situation = 1 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
+situation = 0 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
               #Aperiodic roll (4), Spiral (5)
               
 #______________________________________________________________________________        <------
@@ -87,7 +87,7 @@ end_interval = ((st[situation]-9+cor[situation]+dur[situation])*10+1)
 time = flightdata['flightdata']['time']['data']
 
 Vtrue = flightdata['flightdata']['Dadc1_tas']['data']*Knotsmeter
-AoA = flightdata['flightdata']['vane_AOA']['data']
+AoA = flightdata['flightdata']['vane_AOA']['data']*Degtorad
 pitchA = flightdata['flightdata']['Ahrs1_Pitch']['data']*Degtorad
 press_alt = flightdata['flightdata']['Dadc1_alt']['data']*Feetmeter
 
