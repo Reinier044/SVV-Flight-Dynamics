@@ -27,11 +27,8 @@ Cmde   =   Cmdelta[0][0]         # elevator effectiveness [ ]
 
 #YOU NEED TO SAY WHICH SITUATION YOU ARE IN BY HAND!  <-- <-- <-- <--
 st = [st_ph,st_shp,st_dr,st_drd,st_ar,st_spi] #starting times eigenmotions
-<<<<<<< HEAD
-situation = 4 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
-=======
+
 situation = 2 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
->>>>>>> 978099d173e8b7110f531c8d7a12a092589a1381
               #Aperiodic roll (4), Spiral (5)
 
 hp0    =  press_alt[((st[situation]-9)*10)]  # pressure altitude in the stationary flight condition [m]
