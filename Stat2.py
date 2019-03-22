@@ -167,21 +167,34 @@ FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
 
 if ShowFigures == "Yes":
     
-    plt.figure('trim curve AoA')
-    plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
-    plt.plot(AoA[0:len(Thrustref)],np.degrees(eldefstarAoArad))
+    plt.figure('trim curve - alpha')
+    plt.title("Trim curve - "+ r'$\alpha$')
+    plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro', label='Measured data')
+    plt.plot(AoA[0:len(Thrustref)],np.degrees(eldefstarAoArad), label='Linear regressed')
+    plt.ylabel("eldefstar")
+    plt.xlabel(r'$\alpha$[deg]')
     plt.gca().invert_yaxis()
+    plt.legend()
     
     plt.figure('trim curve')
-    plt.plot(Vetilde,eldefstar,'ro')
-    plt.plot(Vetilde_range,eldefstarRegressed)
+    plt.title('Trim curve')
+    plt.plot(Vetilde,eldefstar,'ro', label='Measured data')
+    plt.plot(Vetilde_range,eldefstarRegressed, label='Polynomial regressed')
+    plt.ylabel("eldefstar")
+    plt.xlabel('$V\~e$ [m/s]')
     plt.gca().invert_yaxis()
+    plt.legend()
+
 
     plt.figure('Stick force curve')
-    plt.plot(Vetilde,Festar,'ro')
-    plt.plot(Vetilde_range,FestarRegressed)
-    
+    plt.title('Stick force curve')
+    plt.plot(Vetilde,Festar,'ro', label='Measured data')
+    plt.plot(Vetilde_range,FestarRegressed, label='Polynomial regressed')
+    plt.ylabel("Force [N]")
+    plt.xlabel('$V\~e$ [m/s]')
     plt.gca().invert_yaxis()
+    plt.legend()
+
 
 
 
