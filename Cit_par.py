@@ -13,8 +13,8 @@ CD0    =  Cd0           # Zero lift drag coefficient [ ]
 CLa    =  Clalpha[0][0]           # Slope of CL-alpha curve [per radian]
 
 # Longitudinal stability
-Cma    =   Cma[0][0]          # longitudinal stabilty [ ]
-Cmde   =   Cmdelta[0][0]         # elevator effectiveness [ ]
+Cma    =   Cma[0]         # longitudinal stabilty [ ]
+Cmde   =   Cmdelta[0]       # elevator effectiveness [ ]
 
 #______________________________________________________________________________
 #------------------------------------------------------------------------------

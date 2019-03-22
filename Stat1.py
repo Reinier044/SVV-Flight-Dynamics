@@ -59,27 +59,33 @@ for i in np.arange(7,16):
 #Calculate total thrust [N]
 for i in range(len(TLeft)):
     Thrust.append(TLeft[i]+TRight[i])
-
-
-#calculation of the density at the measurement points
-rho1 = []
-for i in np.arange(len(T1)):
-    rhoact = Constants['rho_0ISA'] * ((T1[i]/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1)))
-    rho1.append(rhoact)
     
+#Calculation sea level rotterdam
+P0rot = Constants['p_0ISA'] *(Constants['T_0ref']/Constants['T_0ISA'])**(-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))
+rho0rot = Constants['rho_0ISA'] *(Constants['T_0ref']/Constants['T_0ISA'])**-((Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))+1)
 
 #calculation of Caibrated airspeed using table from the assignment
 Vcal1 = []
 for i in range(len(IAS1)):
     Vcal1.append(IAS1[i]-(2*0.514444))
-
-#calculation of True airspeed using reduction of airspeed from assignment
+    
+#calculating true airspeed
 Vtas1 = []
-for i in range(len(rho1)):
-    rho = rho1[i]
-    Vtas =  eq_speed(h1[i],T1[i],Constants,Vcal1[i]) * math.sqrt(Constants['rho_0ISA']/rho)
+M1 = []
+pact1 = []
+for i in range(len(h1)):    
+    Vtas,M,pact = eq_speed(h1[i],T1[i],Constants,Vcal1[i],P0rot,rho0rot)
     Vtas1.append(Vtas)
+    M1.append(M)
+    pact1.append(pact)
+    
+#calculating actual density
+rho1 = []
 
+for i in range(len(h1)):
+    rhoact = rho0rot *(T1[i]/Constants['T_0ref'])**-((Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))+1)
+    rho1.append(rhoact)
+    
 #Calculating the weight at each measurement point using used fuel
 Weight = []
 for i in range(len(Fused)):
@@ -90,7 +96,6 @@ Cl = []
 for i in range(len(Vtas1)):
     Cl.append((Weight[i]*Constants['g_0'])/(0.5*rho1[i]*Constants['S']*Vtas1[i]**2))
 Cl = np.array(Cl).reshape(-1,1)
-
 
 #Calculate Cd
 Cd = []
@@ -111,7 +116,6 @@ lm.fit(Cl2,Cd)
 #Define slope of regression for CL2 over Cd plot
 Slope = lm.coef_ 
 
-
 #oswald factor from Cl2 over Cd
 e = float((1/Slope)/(np.pi*Constants['A']))
 
@@ -120,13 +124,6 @@ Cd0 = float((lm.predict(Cl2) - (Cl2/(np.pi*Constants['A']*e)))[0])
 
 #Redefine Cd as calculated with Cd0 and e
 CdRev = Cd0 + (Cl2/(np.pi*Constants['A']*e))
-
-#mach number range using Tactual and Vtas for the Cl-alpha curve
-T1 = np.array(T1).reshape(-1,1)
-Vtas1 = np.array(Vtas1).reshape(-1,1)
-
-M1 = Vtas1/(np.sqrt(Constants["gammaair"] * Constants["Rgas"] * T1))
-
 
 #Polynomial regression for Cl over Cd
 CdPoly = []
@@ -146,7 +143,7 @@ for i in ClTest:
     CdTest.append(((i**2)*PolyCoefficients[0])+(i*PolyCoefficients[1])+(PolyCoefficients[2]))
 
 #reynolds number range for the Cl-alpha curve
-Reynolds = (np.array(rho1).reshape(-1,1)*Vtas1*Constants['MAC'])/Constants["dynamicviscosityair"]
+Reynolds = (np.array(rho1).reshape(-1,1)*np.array(Vtas1).reshape(-1,1)*Constants['MAC'])/Constants["dynamicviscosityair"]
 
 #Use Regression model from sklearn for Cl over alpha and plotting the regression
 AoA1 = np.array(AoA1).reshape(-1,1)
