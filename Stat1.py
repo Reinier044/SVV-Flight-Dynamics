@@ -182,12 +182,11 @@ if ShowFigures == 'Yes':
     #plt.plot(AoA1,Cl)  
     plt.figure("CD") 
     #plt.plot(ClTest,CdTest)
-    plt.plot(Cl,CdRev)
-    #plt.plot(AoA1,Cd)
     
     
-    plt.plot(ClTest,CdTest, color="blue") #Polynomial regression
-    plt.plot(Cl,CdRev, color="red") #Cd after linear regression
-    plt.plot(Cl,Cd, color="green") #Experimental data
+    plt.title("Cl-Cd")
+    plt.plot(CdTest,ClTest, color="blue") #Polynomial regression
+    plt.plot(CdRev,Cl, color="red") #Cd after linear regression
+    plt.plot(Cd,Cl, color="green") #Experimental data
 
 

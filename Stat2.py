@@ -123,6 +123,8 @@ Tcs = (Tps)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants[
 eldefstarrad = eldefrad[0:len(Thrustref)] - ((1/Cmdelta)*Constants['CmTc']*(Tcs-Tc)) #radian
 eldefstar = np.degrees(eldefstarrad) #degrees
 
+#polynomial regression for deltaeq*
+
 #Festar
 Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0']))
 
@@ -146,13 +148,20 @@ FestarPoly = []
 for i in Festar:
     FestarPoly.append(float(i[0]))
 
+EldefPoly = []
+for i in eldefstar:
+    EldefPoly.append(float(i[0]))
+
 FestarRegressed = []
+eldefstarRegressed = []
     
-PolyCoef = np.polyfit(VetildePoly,FestarPoly,2)
+PolyFestarCoef = np.polyfit(VetildePoly,FestarPoly,2)
+PolyEldefCoef = np.polyfit(VetildePoly,EldefPoly,2)
 Vetilde_range = np.arange(70,100,0.01)
 
 for spd in Vetilde_range:
-    FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
+    FestarRegressed.append(((PolyFestarCoef[0]*spd**2)+(PolyFestarCoef[1]*spd)+PolyFestarCoef[2]))
+    eldefstarRegressed.append(((PolyEldefCoef[0]*spd**2)+(PolyEldefCoef[1]*spd)+PolyEldefCoef[2]))
 FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
 
 
@@ -164,7 +173,8 @@ if ShowFigures == "Yes":
     plt.gca().invert_yaxis()
     
     plt.figure('trim curve')
-    plt.plot(Vetilde,eldefstar)
+    plt.plot(Vetilde,eldefstar,'ro')
+    plt.plot(Vetilde_range,eldefstarRegressed)
     plt.gca().invert_yaxis()
 
     plt.figure('Stick force curve')
