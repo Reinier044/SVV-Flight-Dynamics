@@ -25,7 +25,6 @@ Cmde   =   Cmdelta[0][0]         # elevator effectiveness [ ]
 
 # Stationary flight condition for all eigenvalues------------------------------
 
-#YOU NEED TO SAY WHICH SITUATION YOU ARE IN BY HAND!  <-- <-- <-- <--
 st = [st_ph,st_shp,st_dr,st_drd,st_ar,st_spi] #starting times eigenmotions
 
 hp0    =  press_alt[((st[situation]-9)*10)]  # pressure altitude in the stationary flight condition [m]
