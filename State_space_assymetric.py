@@ -39,7 +39,7 @@ u = np.vstack(((adefflight[st_interval:end_interval])-(adefflight[st_interval:en
               (rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0])))
 t = time[st_interval:end_interval]
 
-sol_a = ml.lsim(Sys_a,U=np.transpose(-u),T=t)
+sol_a = ml.lsim(Sys_a,U=np.transpose(u),T=t)
 #sol = ctr.forced_response(Sys_s,U=u,T=t)
 
 if situation ==0 or situation ==1:

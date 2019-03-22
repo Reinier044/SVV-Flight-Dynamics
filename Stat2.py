@@ -85,6 +85,9 @@ for i in np.arange(7,16):
     Payload.append(sheet.cell_value(i,7))
 Payload = np.array(Payload).reshape(-1,1)
 
+#Calculation sea level rotterdam
+P0rot = Constants['p_0ISA'] *(Constants['T_0ref']/Constants['T_0ISA'])**(-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))
+rho0rot = Constants['rho_0ISA'] *(Constants['T_0ref']/Constants['T_0ISA'])**-((Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))+1)
 
 #Cg shift 2 measurements 
 Weight = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburned #kg
@@ -95,19 +98,18 @@ Cn = (Stat1Results['ClAlphaCoef'][0]*AoA+Stat1Results['ClAlphaCoef'][1])*np.cos(
     + (Stat1Results['CdAlphaCoef'][0]*AoA**2+ \
        Stat1Results['CdAlphaCoef'][1]*AoA+Stat1Results['CdAlphaCoef'][2]) * np.sin(AoArad)
     
-xcg = np.array(([CG_pre],[CG_post])) #m
+xcg = np.vstack(([CG_pre],[CG_post])) #m
 Cmdeltaconstant = ((xcg[1]-xcg[0])/Constants['Chord']) * -(1/(eldefrad[-1]-eldefrad[-2]))
 Cmdelta = Cmdeltaconstant * Cn[-1]
 
 #Thrust 
 Thrustref = ThrustrefL+ThrustrefR #N
 
-#IAS to TAS and actual density calculation
-rhoact = Constants['rho_0ISA'] * ((T/Constants['T_0ref'])**(-(Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA'])+1))) #kg/m^3
+#calculating actual density
+rhoact = rho0rot *(T/Constants['T_0ref'])**-((Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))+1) #kg/m^3
 
 Vcal = IAS2-(2*0.514444) #m/s
-VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact) #m/s
-VTAS = VTAS.reshape(-1,1) #m/s
+VTAS,M,pact = eq_speed(h,T,Constants,Vcal,P0rot,rho0rot)
 
 
 #Thrustcoefficient Tc using total thrust
@@ -125,16 +127,12 @@ eldefstar = np.degrees(eldefstarrad) #degrees
 Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0']))
 
 #Vetilde
-Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
-
-#linear regression trim curve vs speed
-lm = linear_model.LinearRegression()
-lm.fit(Vetilde,eldefstar)
-eldefstarspeed = lm.predict(Vetilde)
+Vetilde = VTAS[0:len(Thrustref)]*np.sqrt(rhoact[0:len(Thrustref)]/rho0rot)*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
 
 #linear regression trim curve versus AoA 
-lm.fit(AoArad[0:len(Thrustref)],eldefstar*(np.pi/180))
-eldefstarAoA = lm.predict(AoArad[0:len(Thrustref)])*(180/np.pi)
+lm = linear_model.LinearRegression()
+lm.fit(AoArad[0:len(Thrustref)],eldefstarrad[0:len(Thrustref)])
+eldefstarAoArad = lm.predict(AoArad[0:len(Thrustref)])
 
 #Getting Cma from the elevator trim curve versus AoA
 Cma = lm.coef_ * -Cmdelta
@@ -144,7 +142,6 @@ VetildePoly = []
 for i in Vetilde:
     VetildePoly.append(float(i[0]))
            
-
 FestarPoly = []
 for i in Festar:
     FestarPoly.append(float(i[0]))
@@ -153,6 +150,7 @@ FestarRegressed = []
     
 PolyCoef = np.polyfit(VetildePoly,FestarPoly,2)
 Vetilde_range = np.arange(70,100,0.01)
+
 for spd in Vetilde_range:
     FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
 FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
@@ -162,12 +160,11 @@ if ShowFigures == "Yes":
     
     plt.figure('trim curve AoA')
     plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
-    plt.plot(AoA[0:len(Thrustref)],eldefstarAoA)
+    plt.plot(AoA[0:len(Thrustref)],np.degrees(eldefstarAoArad))
     plt.gca().invert_yaxis()
     
     plt.figure('trim curve')
-    plt.plot(Vetilde,eldefstar*(np.pi/180))
-    plt.plot(Vetilde,eldefstarspeed*(np.pi/180))
+    plt.plot(Vetilde,eldefstar)
     plt.gca().invert_yaxis()
 
     plt.figure('Stick force curve')
