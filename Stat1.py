@@ -4,6 +4,7 @@ from appendix_b import eq_speed
 import math
 from Constantsdictonary import Constants
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
@@ -136,7 +137,7 @@ for i in Cl:
 
 PolyCoefficients = np.polyfit(ClPoly,CdPoly,2)
 
-ClTest = np.arange(0,0.81,0.01)
+ClTest = np.arange(0,1,0.01)
 
 CdTest = []
 for i in ClTest:
@@ -164,29 +165,30 @@ AoA = np.arange(0,10,0.1).reshape(-1,1)
 
 Cda = ((AoA**2)*a)+(AoA*b)+c
 
+
 if ShowFigures == 'Yes':
-    plt.figure('Cl-alpha')
-    plt.plot(AoA1,lm.predict(AoA1))
+    plt.figure('Cl-'+ r'$\alpha$')
+    plt.plot(AoA,lm.predict(AoA), label = "Linear regression")
+    plt.plot(AoA1,Cl, 'ro', label = "Measured data points")
     #plt.plot(AoA,Cda) 
     plt.ylabel("Cl [-]")
-    plt.xlabel("alpha [degrees]")
-    plt.title("Cl-alpha for cruise configuration, \n Mach ["\
-            +str(round(float(M1[-1]),3))+"-"+str(round(float(M1[0]),3))+"],"\
-            +"\n Reynolds ["+str(float(Reynolds[-1]))+"-"+str(float(Reynolds[0]))+"]")
+    plt.xlabel(r'$\alpha$' + "[degrees]")
+    plt.title("Cl-"+ r'$\alpha$' + " for cruise configuration", loc = "left")
+    plt.suptitle("Mach ["+str(round(float(M1[-1]),3))+" - "+str(round( \
+                float(M1[0]),3))+"],"+"\n Reynolds ["+("{:.2e}".format( \
+                Reynolds[-1][0]))+" - "+("{:.2e}".format(Reynolds[0][0]))+"]",\
+                size='x-small', ha="left", y = '0.94')
+    plt.legend()
 
     
-    plt.figure('Cl2,cd')
-    plt.plot(Cl2,lm.predict(Cl2))
-    #plots
-    plt.figure("CL")
-    #plt.plot(AoA1,Cl)  
-    plt.figure("CD") 
-    #plt.plot(ClTest,CdTest)
-    
-    
-    plt.title("Cl-Cd")
-    plt.plot(CdTest,ClTest, color="blue") #Polynomial regression
-    plt.plot(CdRev,Cl, color="red") #Cd after linear regression
-    plt.plot(Cd,Cl, color="green") #Experimental data
-
+    plt.figure('$C_L-C_D$')
+    plt.title('$C_L-C_D$', loc = "left")
+    plt.plot(CdTest,ClTest, color="blue",label='Polynomial regression') #Polynomial regression
+    #plt.plot(CdRev,Cl, color="red") #Cd after linear regression
+    plt.plot(Cd,Cl,'ro',color="red",label='Measured data') #Experimental data
+    plt.suptitle("Mach ["+str(round(float(M1[-1]),3))+" - "+str(round( \
+                float(M1[0]),3))+"],"+"\n Reynolds ["+("{:.2e}".format( \
+                Reynolds[-1][0]))+" - "+("{:.2e}".format(Reynolds[0][0]))+"]",\
+                size='x-small', ha="left", y = '0.94')
+    plt.legend()
 
