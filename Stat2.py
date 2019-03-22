@@ -127,38 +127,14 @@ Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constan
 #Vetilde
 Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
 
-Vcal = IAS2-(2*0.514444) #m/s
-VTAS = eq_speed(h,T,Constants,Vcal) * np.sqrt(Constants['rho_0ISA']/rhoact) #m/s
-VTAS = VTAS.reshape(-1,1) #m/s
-
-
-#linear regression trim curve
+#linear regression trim curve vs speed
 lm = linear_model.LinearRegression()
 lm.fit(Vetilde,eldefstar)
-
-#Thrustcoefficient Tc using total thrust
-Tc = (Thrustref)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) #N, using thrust of 1 engine, avarage between the 2
-
-#Thrustcoefficient Tcs using total standard thrust
-Tps = Tps1engine*2 #N
-Tcs = (Tps)/(0.5*rhoact[0:len(Thrustref)]*(VTAS[0:len(Thrustref)]**2)*Constants['Dengine']**2) 
-
-#Festar
-Festar = Fe[0:len(Thrustref)]*(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0']))
-
-#Vetilde
-Vetilde = eq_speed(h,T,Constants,Vcal)[0:len(Thrustref)]*np.sqrt(Constants['Ws']/(Weight[0:len(Thrustref)]*Constants['g_0'])) 
-
-#linear regression trim curve versus speed
-lm = linear_model.LinearRegression()
-lm.fit(Vetilde,eldefstar)
-
-
+eldefstarspeed = lm.predict(Vetilde)
 
 #linear regression trim curve versus AoA 
 lm.fit(AoArad[0:len(Thrustref)],eldefstar*(np.pi/180))
-
-
+eldefstarAoA = lm.predict(AoArad[0:len(Thrustref)])*(180/np.pi)
 
 #Getting Cma from the elevator trim curve versus AoA
 Cma = lm.coef_ * -Cmdelta
@@ -176,7 +152,7 @@ for i in Festar:
 FestarRegressed = []
     
 PolyCoef = np.polyfit(VetildePoly,FestarPoly,2)
-Vetilde_range = np.arange(55,100,0.01)
+Vetilde_range = np.arange(70,100,0.01)
 for spd in Vetilde_range:
     FestarRegressed.append(((PolyCoef[0]*spd**2)+(PolyCoef[1]*spd)+PolyCoef[2]))
 FestarRegressed = np.array(FestarRegressed).reshape(-1,1)
@@ -186,12 +162,12 @@ if ShowFigures == "Yes":
     
     plt.figure('trim curve AoA')
     plt.plot(AoA[0:len(Thrustref)],eldefstar,'ro')
-    plt.plot(AoA[0:len(Thrustref)],lm.predict(AoA[0:len(Thrustref)]))
+    plt.plot(AoA[0:len(Thrustref)],eldefstarAoA)
     plt.gca().invert_yaxis()
     
     plt.figure('trim curve')
-    plt.plot(Vetilde,eldefstar,'ro')
-    plt.plot(Vetilde,lm.predict(Vetilde))
+    plt.plot(Vetilde,eldefstar*(np.pi/180))
+    plt.plot(Vetilde,eldefstarspeed*(np.pi/180))
     plt.gca().invert_yaxis()
 
     plt.figure('Stick force curve')

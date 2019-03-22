@@ -4,7 +4,7 @@ import control.matlab as ml
 import control as ctr
 import matplotlib.pyplot as plt
 from Flight_data import *
-from Validation import *
+
 from Constantsdictonary import Constants
 #Symmetric Flight ____________________________________________________________
 Dc = Constants['Chord']/V0
@@ -34,17 +34,46 @@ D_s = np.zeros((4,1))
 
 Sys_s = ml.ss(A_s,B_s,C_s,D_s)
 
-duration_shp = 20
-u = (eldefflight[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]*(np.pi/180))-(eldefflight[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)][0]*(np.pi/180))
-t = time[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]
+u = (eldefflight[st_interval:end_interval])-(eldefflight[st_interval:end_interval][0])
+t = time[st_interval:end_interval]
 
 sol = ml.lsim(Sys_s,U=u,T=t)
+print(situation)
+
+AoA = AoA - AoA[st_interval]
+pitchA = pitchA - pitchA[st_interval]
+
 #sol = ctr.forced_response(Sys_s,U=u,T=t)
 
-
-plt.figure('response')
-plt.plot(sol[1],(sol[0][:,2]*(180/np.pi)+(pitchA[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)][0])*(180/np.pi)))
-plt.plot(sol[1],pitchA[((st_shp-9)*10):((st_shp-9+duration_shp)*10+1)]*(180/np.pi))
-plt.show
-
+if situation ==0 or situation ==1:
+    plt.figure('response speed')
+    plt.plot(sol[1],(sol[0][:,0]+(Vtrue[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol[1],Vtrue[st_interval:end_interval],label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('response AoA')
+    plt.plot(sol[1],(sol[0][:,1]*Radtodeg+(AoA[st_interval:end_interval][0])*Radtodeg),label='statespace')
+    plt.plot(sol[1],AoA[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('response pitch')
+    plt.plot(sol[1],(sol[0][:,2]*Radtodeg+(pitchA[st_interval:end_interval][0])*Radtodeg),label='statespace')
+    plt.plot(sol[1],pitchA[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('response Pitch rate')
+    plt.plot(sol[1],(sol[0][:,3]*Radtodeg+(pitchrate[st_interval:end_interval][0])*Radtodeg),label='statespace')
+    plt.plot(sol[1],pitchrate[st_interval:end_interval]*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+    
+    plt.figure('Elevator defl')
+    plt.plot(sol[1],eldefflight[st_interval:end_interval]*Radtodeg-(eldefflight[st_interval:end_interval][0])*Radtodeg,label='data')
+    plt.legend()
+    plt.show
+else:
+    print('Not Symmetric')
 eigval_s,eigvec_s = np.linalg.eig(A_s)
