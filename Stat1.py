@@ -8,7 +8,7 @@ from matplotlib.font_manager import FontProperties
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
-ShowFigures = 'Yes'
+ShowFigures = 'No'
 
 DataBook = input("Reference data or Flight data? type (R/F): ")
 

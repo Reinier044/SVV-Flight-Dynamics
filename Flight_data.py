@@ -52,14 +52,14 @@ correction_ph = 30
 correction_shp = 11
 correction_dr = 10
 correction_drd = 10
-correction_ar = 40
+correction_ar = 44
 correction_spi = 20
 
 #Durations of the eigenmotions
-duration_ph = 200 
-duration_shp = 8 
-duration_dr = 16 
-duration_drd = 16
+duration_ph = 175 
+duration_shp = 10 
+duration_dr = 25 #12 is best time span but let it 25 to show statespace exploding somehow
+duration_drd = 12 #12 is best time span but let it 25 to show statespace exploding somehow
 duration_ar =16 
 duration_spi = 310 
 
@@ -68,7 +68,7 @@ duration_spi = 310
 #                                SITUATION
 #------------------------------------------------------------------------------        <------
 #______________________________________________________________________________        <------
-situation = 0 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
+situation = 4 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
               #Aperiodic roll (4), Spiral (5)
               
 #______________________________________________________________________________        <------
