@@ -178,20 +178,42 @@ else:
     
 
 #state space initial value problem
-sol1 = ml.step(Sys_s,T=t,X0 = np.array([[0],[0],[0],[0]]))
+tinitial = np.arange(0,10,0.001)
+sol1 = ml.lsim(Sys_s,T=tinitial,X0 = np.array([[0],[0],[0.0],[0.05]]))
 
-plt.figure('initial')
+plt.figure('initial value problem')
 plt.subplot(411)
-plt.plot(sol1[1],sol1[0][:,0])
+plt.plot(sol1[1],sol1[0][:,0]/V0)
+plt.ylabel(r'$\^u$ [-]',fontsize = fonty)
+plt.yticks(np.arange(-0.01,0.01,0.005),fontsize = fonty)
+plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+plt.xlim(tinitial[0],tinitial[-1])
+plt.grid()
 
 plt.subplot(412)
 plt.plot(sol1[1],sol1[0][:,1])
+plt.ylabel(r'$\alpha$ [rad]',fontsize = fonty)
+plt.yticks(np.arange(-0.005,0.0125,0.005),fontsize = fonty)
+plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+plt.xlim(tinitial[0],tinitial[-1])
+plt.grid()
 
 plt.subplot(413)
 plt.plot(sol1[1],sol1[0][:,2])
+plt.ylabel(r'$\theta$ [rad]',fontsize = fonty)
+plt.yticks(np.arange(-0.01,0.03,0.01),fontsize = fonty)
+plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+plt.xlim(tinitial[0],tinitial[-1])
+plt.grid()
 
 plt.subplot(414)
 plt.plot(sol1[1],sol1[0][:,3])
+plt.ylabel(r'q [rad/sec]',fontsize = fonty)
+plt.xlabel(r'time [sec]')
+plt.yticks(np.arange(-0.02,0.08,0.02),fontsize = fonty)
+plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
+plt.xlim(tinitial[0],tinitial[-1])
+plt.grid()
 
 
 
