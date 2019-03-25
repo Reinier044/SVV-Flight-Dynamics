@@ -49,13 +49,12 @@ eigval_a,eigvec_a = np.linalg.eig(A_a)
 u = np.vstack(((adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),\
               (rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0])))
 
-u[1,:] = -u[1,:]
 
 t = time[st_interval:end_interval]
 t = np.arange(0,t[-1]-t[0]+0.1,0.1)
 
 
-sol_a = ml.lsim(Sys_a,U=np.transpose(u),T=t)
+sol_a = ml.lsim(Sys_a,U=np.transpose(-u),T=t)
 #sol = ctr.forced_response(Sys_s,U=u,T=t)
 
 if situation ==0 or situation ==1:
