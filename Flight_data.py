@@ -52,14 +52,14 @@ correction_ph = 30
 correction_shp = 11
 correction_dr = 10
 correction_drd = 10
-correction_ar = 40
+correction_ar = 44
 correction_spi = 20
 
 #Durations of the eigenmotions
-duration_ph = 200 
-duration_shp = 8 
-duration_dr = 16 
-duration_drd = 16
+duration_ph = 175 
+duration_shp = 10 #was 10 
+duration_dr = 25 #12 is best time span but let it 25 to show statespace exploding somehow
+duration_drd = 12 #12 is best time span but let it 25 to show statespace exploding somehow
 duration_ar =16 
 duration_spi = 310 
 

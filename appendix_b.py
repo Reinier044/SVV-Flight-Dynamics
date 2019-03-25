@@ -34,19 +34,16 @@ def elevator_trim():
     return deflection_elev
 
 
-def eq_speed(h_p,T_m,Constants,Vcal):
-    p = Constants['p_0ISA']*(1+ \
-                 ((Constants['lmbdaISA']*h_p)/Constants['T_0ISA']))\
-                 ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure
-    
-    mach = (2 / (Constants["gammaair"] - 1) * ((1 + Constants["p_0ISA"] / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * Constants["rho_0ISA"] / Constants["p_0ISA"] * Vcal ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
-#    print(mach)
+def eq_speed(h_p,T_m,Constants,Vcal,P0rot,rho0rot):
+    p = P0rot*(1+ \
+                 ((Constants['lmbdaISA']*h_p)/Constants['T_0ref']))\
+                 ** (-Constants['g_0']/(Constants['Rgas']*Constants['lmbdaISA']))  # static pressure  
+    mach = (2 / (Constants["gammaair"] - 1) * ((1 + P0rot / p * ((1 + (Constants["gammaair"] - 1) / (2 * Constants["gammaair"]) * rho0rot / P0rot * Vcal ** 2) ** (Constants["gammaair"] / (Constants["gammaair"] - 1)) - 1)) ** ((Constants["gammaair"] - 1) / Constants["gammaair"]) - 1)) ** (1 / 2)
     T = T_m / (1 + (Constants["gammaair"] - 1) / 2 * mach ** 2)  # static air temperature
     sound_speed = (Constants["gammaair"] * Constants["Rgas"] * T) ** (1 / 2)  # speed ot sound
-    rho = p / Constants['Rgas'] / T  # air density
-    V_e = mach * sound_speed * (rho / Constants['rho_0ISA'])**(1 / 2)
-
-    return V_e
+    
+    V_t = mach * sound_speed
+    return V_t,mach,p
 
 def non_standard_mass(V_e):
     # reduced speed due to non_standard mass
