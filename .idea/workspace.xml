@@ -2,10 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33586459-e84d-4130-a335-40a5e8176928" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/SVV-Flight-Dynamics.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SVV-Flight-Dynamics.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/Aperiodicroll.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/Dutchrolldamper.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/Dutchrollnodamper.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/Phugoid.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/Shortperiod.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plots/spiral.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thrust(1).exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thrust.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cit_par.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cit_par.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flight_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Flight_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Post_Flight_Datasheet_07_03_V3.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Post_Flight_Datasheet_07_03_V3.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/REFERENCE_Post_Flight_Datasheet_Flight.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/REFERENCE_Post_Flight_Datasheet_Flight.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stat1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stat1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stat2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Stat2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StateSpaceSym.py" beforeDir="false" afterPath="$PROJECT_DIR$/StateSpaceSym.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/State_space_assymetric.py" beforeDir="false" afterPath="$PROJECT_DIR$/State_space_assymetric.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appendix_b.py" beforeDir="false" afterPath="$PROJECT_DIR$/appendix_b.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab.dat" beforeDir="false" afterPath="$PROJECT_DIR$/matlab.dat" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/Cit_par.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="78" column="26" lean-forward="true" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
+              <caret line="85" column="26" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -51,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Stat1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+            <state relative-caret-position="799">
+              <caret line="54" column="43" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -279,7 +293,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12425645" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -414,8 +427,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Stat1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+        <state relative-caret-position="799">
+          <caret line="54" column="43" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -444,7 +457,7 @@
     <entry file="file://$PROJECT_DIR$/Cit_par.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="78" column="26" lean-forward="true" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
+          <caret line="85" column="26" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
