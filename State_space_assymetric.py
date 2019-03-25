@@ -69,6 +69,7 @@ elif situation ==2:
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.2,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -78,6 +79,7 @@ elif situation ==2:
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -87,6 +89,7 @@ elif situation ==2:
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
 
@@ -97,6 +100,7 @@ elif situation ==2:
     plt.yticks(np.arange(-0.15,0.2,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
     plt.xlabel(r'time [sec]')
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -112,6 +116,7 @@ elif situation ==3:
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.2,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -121,6 +126,7 @@ elif situation ==3:
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -130,6 +136,7 @@ elif situation ==3:
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
 
@@ -140,6 +147,7 @@ elif situation ==3:
     plt.yticks(np.arange(-0.15,0.2,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
     plt.xlabel(r'time [sec]')
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -155,6 +163,7 @@ elif situation ==4:
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.75,1.25,0.25),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -164,6 +173,7 @@ elif situation ==4:
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -173,6 +183,7 @@ elif situation ==4:
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
 
@@ -183,6 +194,7 @@ elif situation ==4:
     plt.yticks(np.arange(-0.10,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
     plt.xlabel(r'time [sec]')
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -198,6 +210,7 @@ elif situation ==5:
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-1,0.5,0.25),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -207,6 +220,7 @@ elif situation ==5:
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.1,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -216,6 +230,7 @@ elif situation ==5:
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.1,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
 
@@ -225,6 +240,7 @@ elif situation ==5:
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.01,0.015,0.005),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = fontx)
+    plt.xlim(t[0],t[-1])
     plt.xlabel(r'time [sec]')
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
