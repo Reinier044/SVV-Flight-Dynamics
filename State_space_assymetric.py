@@ -49,11 +49,13 @@ eigval_a,eigvec_a = np.linalg.eig(A_a)
 u = np.vstack(((adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),\
               (rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0])))
 
+u[1,:] = -u[1,:]
+
 t = time[st_interval:end_interval]
 t = np.arange(0,t[-1]-t[0]+0.1,0.1)
 
 
-sol_a = ml.lsim(Sys_a,U=np.transpose(-u),T=t)
+sol_a = ml.lsim(Sys_a,U=np.transpose(u),T=t)
 #sol = ctr.forced_response(Sys_s,U=u,T=t)
 
 if situation ==0 or situation ==1:
@@ -105,7 +107,7 @@ elif situation ==2:
 elif situation ==3:
     
     plt.subplot(411)
-    plt.title('Dutch Roll, No yaw damper')
+    plt.title('Dutch Roll, with yaw damper')
     plt.plot(sol_a[1],rollA[st_interval:end_interval],label='data')    
     plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='statespace')
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
@@ -133,8 +135,8 @@ elif situation ==3:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='data')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='data')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='a')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='r')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.15,0.2,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
@@ -176,8 +178,8 @@ elif situation ==4:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='data')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='data')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='a')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='r')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.10,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
