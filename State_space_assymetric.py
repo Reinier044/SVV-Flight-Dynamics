@@ -85,7 +85,7 @@ elif situation ==2:
     
     plt.subplot(413)
     plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -132,7 +132,7 @@ elif situation ==3:
     
     plt.subplot(413)
     plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -179,7 +179,7 @@ elif situation ==4:
     
     plt.subplot(413)
     plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -226,7 +226,7 @@ elif situation ==5:
     
     plt.subplot(413)
     plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],sol_a[0][:,3]+(yawrate[st_interval:end_interval][0]),label='statespace')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.1,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -248,3 +248,40 @@ elif situation ==5:
     plt.savefig('./Plots/spiral.pdf')
 #    plt.close()
     
+##state space initial value problem
+#tinitial = np.arange(0,10,0.001)
+#sol1 = ml.lsim(Sys_a,T=tinitial,X0 = np.array([[0.0],[0.0],[0.0],[0.05]]))
+#
+#plt.figure('initial value problem')
+#plt.subplot(411)
+#plt.plot(sol1[1],sol1[0][:,0])
+#plt.ylabel(r'$\beta$ [rad]',fontsize = fonty)
+#plt.yticks(np.arange(-0.04,0.05,0.02),fontsize = fonty)
+#plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+#plt.xlim(tinitial[0],tinitial[-1])
+#plt.grid()
+#
+#plt.subplot(412)
+#plt.plot(sol1[1],sol1[0][:,1])
+#plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
+#plt.yticks(np.arange(0.0,0.035,0.01),fontsize = fonty)
+#plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+#plt.xlim(tinitial[0],tinitial[-1])
+#plt.grid()
+#
+#plt.subplot(413)
+#plt.plot(sol1[1],sol1[0][:,2])
+#plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
+#plt.yticks(np.arange(-0.02,0.05,0.02),fontsize = fonty)
+#plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+#plt.xlim(tinitial[0],tinitial[-1])
+#plt.grid()
+#
+#plt.subplot(414)
+#plt.plot(sol1[1],sol1[0][:,3])
+#plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
+#plt.xlabel(r'time [sec]')
+#plt.yticks(np.arange(-0.03,0.06,0.02),fontsize = fonty)
+#plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
+#plt.xlim(tinitial[0],tinitial[-1])
+#plt.grid()
