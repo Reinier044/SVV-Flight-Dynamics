@@ -21,7 +21,16 @@ Cmde   =   Cmdelta[0]       # elevator effectiveness [ ]
 #              THE SAME CONSTANT VALUES FOR ANALYTICAL AND NUMERICAL
 #------------------------------------------------------------------------------
 #______________________________________________________________________________
-   
+
+hp0    =  press_alt[st_interval]  # pressure altitude in the stationary flight condition [m]
+V0     =  Vtrue[st_interval]      # true airspeed in the stationary flight condition [m/sec]
+AoA0 =  AoA[st_interval]        # angle of attack in the stationary flight condition [rad]
+th0    =  pitchA[st_interval]     # pitch angle in the stationary flight condition [rad]
+
+# Aircraft mass
+Fburn = (F_used_L[st_interval] + F_used_R[st_interval]) #[kg]
+
+
 m     = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburn             # mass [kg]
 
 
