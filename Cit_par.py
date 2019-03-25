@@ -21,18 +21,7 @@ Cmde   =   Cmdelta[0]       # elevator effectiveness [ ]
 #              THE SAME CONSTANT VALUES FOR ANALYTICAL AND NUMERICAL
 #------------------------------------------------------------------------------
 #______________________________________________________________________________
-
-
-# Stationary flight condition for all eigenvalues------------------------------
-
-#YOU NEED TO SAY WHICH SITUATION YOU ARE IN BY HAND!  <-- <-- <-- <--
-st = [st_ph,st_shp,st_dr,st_drd,st_ar,st_spi] #starting times eigenmotions
-
-situation = 0 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
-              #Aperiodic roll (4), Spiral (5)
-
-    
-    
+   
 m     = Constants['Basicemptyweight'] + np.sum(Payload) + Constants['Fuelref'] - Fburn             # mass [kg]
 
 
