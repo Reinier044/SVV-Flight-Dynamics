@@ -60,6 +60,14 @@ sol = ml.lsim(Sys_s,U=u,T=t)
 
 if situation ==0:
     
+    
+#    #    Constant angle of attack so no interest in this minor deviation
+#    plt.figure('response AoA')
+#    plt.plot(sol[1],(sol[0][:,1]*Radtodeg+(AoA[st_interval:end_interval][0])*Radtodeg),label='statespace')
+#    plt.plot(sol[1],AoA[st_interval:end_interval]*Radtodeg,label='data')
+#    plt.legend()
+#    plt.show
+    
     plt.figure('phugoid')
     plt.subplot(411)
     plt.title("Phugoid")
@@ -68,15 +76,9 @@ if situation ==0:
     plt.ylabel(r'$V_t$ [m/s]',fontsize = fonty)
     plt.yticks(np.arange(80,130,10),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
-
-##    Constant angle of attack so no interest in this minor deviation
-#    plt.figure('response AoA')
-#    plt.plot(sol[1],(sol[0][:,1]*Radtodeg+(AoA[st_interval:end_interval][0])*Radtodeg),label='statespace')
-#    plt.plot(sol[1],AoA[st_interval:end_interval]*Radtodeg,label='data')
-#    plt.legend()
-#    plt.show
     
     plt.subplot(412)
     plt.plot(sol[1],pitchA[st_interval:end_interval],label='data')
@@ -84,6 +86,7 @@ if situation ==0:
     plt.ylabel(r'$\theta$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.15,0.20,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
    
@@ -93,6 +96,7 @@ if situation ==0:
     plt.ylabel(r'q [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.030,0.035,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -102,6 +106,7 @@ if situation ==0:
     plt.xlabel(r'time [sec]')
     plt.yticks(np.arange(-0.01,0.015,0.005),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = fontx)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     plt.show
@@ -130,6 +135,7 @@ elif situation ==1:
     plt.ylabel(r'$\alpha$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.01,0.06,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -139,6 +145,7 @@ elif situation ==1:
     plt.ylabel(r'$\theta$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(0,0.35,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -148,6 +155,7 @@ elif situation ==1:
     plt.ylabel(r'q [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.05,0.125,0.025),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     
@@ -157,6 +165,7 @@ elif situation ==1:
     plt.xlabel(r'time [sec]')
     plt.yticks(np.arange(-0.03,0.02,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
+    plt.xlim(t[0],t[-1])
     plt.grid()
     plt.legend(loc = 1,fontsize = fontlegend)
     plt.show()
@@ -169,20 +178,20 @@ else:
     
 
 #state space initial value problem
-sol1 = ctr.step_response(Sys_s,t,X0 = np.array([[0],[0.1],[0],[0]]))
+sol1 = ml.step(Sys_s,T=t,X0 = np.array([[0],[0],[0],[0]]))
 
 plt.figure('initial')
 plt.subplot(411)
-plt.plot(sol1[0],sol1[1][0,:])
+plt.plot(sol1[1],sol1[0][:,0])
 
 plt.subplot(412)
-plt.plot(sol1[0],sol1[1][1,:])
+plt.plot(sol1[1],sol1[0][:,1])
 
 plt.subplot(413)
-plt.plot(sol1[0],sol1[1][2,:])
+plt.plot(sol1[1],sol1[0][:,2])
 
 plt.subplot(414)
-plt.plot(sol1[0],sol1[1][3,:])
+plt.plot(sol1[1],sol1[0][:,3])
 
 
 
