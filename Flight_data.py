@@ -47,13 +47,14 @@ st_drd = int(timechange(sheet.cell_value(83,6))) #starting time dutch roll damp
 st_ar  = int(timechange(sheet.cell_value(82,9))) #starting time aperiodic roll 
 st_spi = int(timechange(sheet.cell_value(83,9))) #starting time spiral
 
-#time corrections of eigenmotions, these times are added to the starting time
+##time corrections of eigenmotions, these times are added to the starting time
 correction_ph = 30
 correction_shp = 11
 correction_dr = 10
 correction_drd = 10
 correction_ar = 44
 correction_spi = 20
+
 
 #Durations of the eigenmotions
 duration_ph = 175 
@@ -67,8 +68,8 @@ duration_spi = 310
 #------------------------------------------------------------------------------        <------
 #                                SITUATION
 #------------------------------------------------------------------------------        <------
-#______________________________________________________________________________        <------
-situation = 4 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
+#_____________________________________________________________________________        <------
+situation = 5 #Phugoid (0),Short period (1),Dutch roll (2),Dutch roll damp(3)
               #Aperiodic roll (4), Spiral (5)
               
 #______________________________________________________________________________        <------

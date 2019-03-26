@@ -14,7 +14,7 @@ if not os.path.exists('./Plots'):
     
 fontx = 8
 fonty = 8
-fontlegend = 'xx-small'
+fontlegend = 'x-small'
 
 AoA = AoA - AoA[st_interval]
 pitchA = pitchA - pitchA[st_interval]
@@ -71,8 +71,8 @@ if situation ==0:
     plt.figure('phugoid')
     plt.subplot(411)
     plt.title("Phugoid")
-    plt.plot(sol[1],Vtrue[st_interval:end_interval],label='data')
-    plt.plot(sol[1],sol[0][:,0]+(Vtrue[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol[1],Vtrue[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],sol[0][:,0]+(Vtrue[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'$V_t$ [m/s]',fontsize = fonty)
     plt.yticks(np.arange(80,130,10),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -81,8 +81,8 @@ if situation ==0:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol[1],pitchA[st_interval:end_interval],label='data')
-    plt.plot(sol[1],(sol[0][:,2]+pitchA[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol[1],pitchA[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],(sol[0][:,2]+pitchA[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'$\theta$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.15,0.20,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -91,8 +91,8 @@ if situation ==0:
     plt.legend(loc = 1,fontsize = fontlegend)
    
     plt.subplot(413)
-    plt.plot(sol[1],pitchrate[st_interval:end_interval],label='data')
-    plt.plot(sol[1],(sol[0][:,3]+pitchrate[st_interval:end_interval][0]),label='statespace',)
+    plt.plot(sol[1],pitchrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],(sol[0][:,3]+pitchrate[st_interval:end_interval][0]),label='Numerical Model',)
     plt.ylabel(r'q [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.030,0.035,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -101,7 +101,7 @@ if situation ==0:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(414)
-    plt.plot(sol[1],eldefflight[st_interval:end_interval]-eldefflight[st_interval:end_interval][0],label='data')
+    plt.plot(sol[1],eldefflight[st_interval:end_interval]-eldefflight[st_interval:end_interval][0],label='Flight Data')
     plt.ylabel(r'$\delta_e$ [rad]',fontsize = fonty)
     plt.xlabel(r'time [sec]')
     plt.yticks(np.arange(-0.01,0.015,0.005),fontsize = fonty)
@@ -130,8 +130,8 @@ elif situation ==1:
     plt.figure('Short period')
     plt.subplot(411)
     plt.title('Short Period')
-    plt.plot(sol[1],AoA[st_interval:end_interval],label='data')
-    plt.plot(sol[1],sol[0][:,1]+(AoA[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol[1],AoA[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],sol[0][:,1]+(AoA[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'$\alpha$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.01,0.06,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -140,8 +140,8 @@ elif situation ==1:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol[1],pitchA[st_interval:end_interval],label='data')
-    plt.plot(sol[1],sol[0][:,2]+(pitchA[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol[1],pitchA[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],sol[0][:,2]+(pitchA[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'$\theta$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(0,0.35,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -150,8 +150,8 @@ elif situation ==1:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(413)
-    plt.plot(sol[1],pitchrate[st_interval:end_interval],label='data')
-    plt.plot(sol[1],sol[0][:,3]+(pitchrate[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol[1],pitchrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol[1],sol[0][:,3]+(pitchrate[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'q [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.05,0.125,0.025),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -160,8 +160,8 @@ elif situation ==1:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(414)
-    plt.plot(sol[1],eldefflight[st_interval:end_interval]-(eldefflight[st_interval:end_interval][0]),label='data')
-    plt.ylabel(r'$V_t$ [m/s]',fontsize = fonty)
+    plt.plot(sol[1],eldefflight[st_interval:end_interval]-(eldefflight[st_interval:end_interval][0]),label='Flight Data')
+    plt.ylabel(r'$\delta_e$ [rad]',fontsize = fonty)
     plt.xlabel(r'time [sec]')
     plt.yticks(np.arange(-0.03,0.02,0.01),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)

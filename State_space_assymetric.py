@@ -12,7 +12,7 @@ if not os.path.exists('./Plots'):
     
 fontx = 8
 fonty = 8
-fontlegend = 'xx-small'
+fontlegend = 'x-small'
 
 print(situation)
 
@@ -63,9 +63,9 @@ if situation ==0 or situation ==1:
 elif situation ==2:
     
     plt.subplot(411)
-    plt.title('Dutch Roll, No yaw damper')
-    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='data')    
-    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='statespace')
+    plt.title('Dutch Roll, without yaw damper')
+    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='Flight Data')    
+    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.2,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -74,8 +74,8 @@ elif situation ==2:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -84,8 +84,8 @@ elif situation ==2:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(413)
-    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -94,8 +94,8 @@ elif situation ==2:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='data')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='data')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='Flight Data Aileron')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='Flight Data Rudder')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.15,0.2,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
@@ -111,8 +111,8 @@ elif situation ==3:
     
     plt.subplot(411)
     plt.title('Dutch Roll, with yaw damper')
-    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='data')    
-    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='Flight Data')    
+    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.2,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -121,8 +121,8 @@ elif situation ==3:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -131,8 +131,8 @@ elif situation ==3:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(413)
-    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -141,8 +141,8 @@ elif situation ==3:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='a')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='r')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='Flight Data Aileron')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='Flight Data Rudder')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.15,0.2,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
@@ -158,8 +158,8 @@ elif situation ==4:
     
     plt.subplot(411)
     plt.title('Aperiodic roll')
-    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='data')    
-    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='Flight Data')    
+    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.75,1.25,0.25),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -168,8 +168,8 @@ elif situation ==4:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -178,8 +178,8 @@ elif situation ==4:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(413)
-    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,3]+(yawrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.3,0.4,0.1),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = 0)
@@ -188,8 +188,8 @@ elif situation ==4:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='a')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='r')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='Flight Data Aileron')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='Flight Data Rudder')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.10,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+1,1),fontsize = fontx)
@@ -205,8 +205,8 @@ elif situation ==5:
     
     plt.subplot(411)
     plt.title('Spiral')
-    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='data')    
-    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollA[st_interval:end_interval],label='Flight Data')    
+    plt.plot(sol_a[1],(sol_a[0][:,1]+(rollA[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$\phi$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-1,0.5,0.25),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -215,8 +215,8 @@ elif situation ==5:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(412)
-    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='statespace')
+    plt.plot(sol_a[1],rollrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],(sol_a[0][:,2]+(rollrate[st_interval:end_interval][0])),label='Numerical Model')
     plt.ylabel(r'$p$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.1,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -225,8 +225,8 @@ elif situation ==5:
     plt.legend(loc = 1,fontsize = fontlegend)
     
     plt.subplot(413)
-    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='data')
-    plt.plot(sol_a[1],sol_a[0][:,3]+(yawrate[st_interval:end_interval][0]),label='statespace')
+    plt.plot(sol_a[1],yawrate[st_interval:end_interval],label='Flight Data')
+    plt.plot(sol_a[1],sol_a[0][:,3]+(yawrate[st_interval:end_interval][0]),label='Numerical Model')
     plt.ylabel(r'$r$ [rad/sec]',fontsize = fonty)
     plt.yticks(np.arange(-0.1,0.15,0.05),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = 0)
@@ -235,8 +235,8 @@ elif situation ==5:
     plt.legend(loc = 1,fontsize = fontlegend)
 
     plt.subplot(414)
-    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='data')
-    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='data')
+    plt.plot(sol_a[1],(adefflight[st_interval:end_interval])-(adefflight[st_interval:end_interval][0]),label='Flight Data Aileron')
+    plt.plot(sol_a[1],(rdefflight[st_interval:end_interval])-(rdefflight[st_interval:end_interval][0]),label='Flight Data Rudder')
     plt.ylabel(r'$\delta_a , \delta_r$ [rad]',fontsize = fonty)
     plt.yticks(np.arange(-0.01,0.015,0.005),fontsize = fonty)
     plt.xticks(np.arange(0,t[-1]+25,25),fontsize = fontx)
